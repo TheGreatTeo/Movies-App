@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Movies-App/app/src/main/res/layout/activity_log_in.xml" value="0.36666666666666664" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_log_in.xml" value="0.35260416666666666" />
+        <entry key="..\:/Movies-App/app/src/main/res/layout/login_fragment.xml" value="0.33" />
+        <entry key="..\:/Movies-App/app/src/main/res/layout/signup_fragment.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
@@ -12,5 +16,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.36666666666666664" />
+      </ProjectState>
+    </option>
   </component>
 </project>
