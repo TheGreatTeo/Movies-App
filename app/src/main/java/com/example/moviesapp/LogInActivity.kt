@@ -9,8 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.moviesapp.controller.callback
 
-class LogInActivity : AppCompatActivity() {
+class LogInActivity : AppCompatActivity(), callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,10 @@ class LogInActivity : AppCompatActivity() {
             replace(R.id.frameLogIn,fragment)
             commit()
         }
+    }
+
+    override fun changeFragment() {
+
     }
 
     private fun openActivity(activity: Class<*>){
