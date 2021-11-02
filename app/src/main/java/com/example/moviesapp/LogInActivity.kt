@@ -13,29 +13,31 @@ import com.example.moviesapp.controller.callback
 
 class LogInActivity : AppCompatActivity(), callback {
 
+    var signUpFragment = SignUpFragment()
+    var logInFragment = LogInFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
 
-        val logInFragment = LogInFragment()
-        val signUpFragment = SignUpFragment()
-
-        switchToFragment(logInFragment)
+        switchToLogIn()
     }
-    private fun switchToFragment(fragment: Fragment){
+    private fun switchToLogIn(){
+        logInFragment.getCallbackFragment(this)
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frameLogIn,fragment)
+            replace(R.id.frameLogIn,logInFragment)
+            commit()
+        }
+    }
+    private fun switchToSignUp(){
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.frameLogIn,signUpFragment)
+            addToBackStack(null)
             commit()
         }
     }
 
     override fun changeFragment() {
-
-    }
-
-    private fun openActivity(activity: Class<*>){
-        val intent = Intent(this,activity)
-        startActivity(intent)
-        finish()
+        switchToSignUp()
     }
 }
