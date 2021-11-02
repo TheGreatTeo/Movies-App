@@ -23,7 +23,7 @@ class MovieAdapter(private val movieList: List<MovieItem>) : RecyclerView.Adapte
 
         holder.imageView.setImageResource(currentMovie.imageResource)
         holder.title.text = currentMovie.title
-        holder.rating.text = currentMovie.rating.toString()
+        holder.rating.text = "⭐"+currentMovie.rating.toString()
     }
 
     override fun getItemCount() = movieList.size
