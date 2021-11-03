@@ -45,11 +45,7 @@ open class AuthHandler(auth: FirebaseAuth, context: Context) {
         return result
     }
 
-    fun registerUser(emailText: EditText, passwordText: EditText, confirmPasswordText : EditText){
-        var email = emailText.text.toString()
-        var password = passwordText.text.toString()
-        var confirmPassword = confirmPasswordText.text.toString()
-
+    fun registerUser(email: String, password: String, confirmPassword : String){
         if(!password.equals(confirmPassword)){
             return
         }
