@@ -50,7 +50,7 @@
         app:layout_constraintWidth_percent="0.7" />
 
     <Button
-        android:id="@+id/signUpButton"
+        android:id="@+id/signUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Sign UP"

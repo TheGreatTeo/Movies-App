@@ -1,15 +1,10 @@
 package com.example.moviesapp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.moviesapp.controller.callback
+import com.example.moviesapp.fragments.LogInFragment
+import com.example.moviesapp.fragments.SignUpFragment
 
 class LogInActivity : AppCompatActivity(), callback {
 
