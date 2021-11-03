@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.HomeFragment">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/banner"
+        android:layout_width="0dp"
+        android:layout_height="124dp"
+        android:src="@drawable/banner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="1"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/welcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textAlignment="center"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintWidth_percent="0.7" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean quam velit, ornare at tellus vel, aliquet luctus felis. Nunc vulputate diam id velit sodales, ac rutrum sapien ultrices. Proin pharetra nisi eleifend, tempor urna ac, ultricies sem. Aliquam imperdiet semper nulla ac posuere. Vestibulum maximus leo tellus, non tristique ex lacinia sed. Mauris et finibus velit. Nam ligula tortor, consequat ac euismod mollis, ornare id ipsum. Praesent vitae ex gravida, dignissim elit vitae, posuere urna. Sed molestie ante ligula, non tempor justo elementum eu. Nunc sagittis gravida viverra. Vestibulum pharetra risus et luctus egestas. Ut finibus semper felis, non ornare tortor sodales vel. Nunc lacinia venenatis sem, et pharetra metus."
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

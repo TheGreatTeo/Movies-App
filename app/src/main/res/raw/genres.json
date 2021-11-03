@@ -1,0 +1,42 @@
+[
+    {
+      "genre": "Action",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/avengers-infinity-war_89e0d364_480x.progressive.jpg?v=1631200474"
+    },
+    {
+      "genre": "Adventure",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/dune_tfc43wep_480x.progressive.jpg?v=1634918156"
+    },
+    {
+      "genre": "Comedy",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/onceuponatimehollywood.flo.ar_480x.progressive.jpg?v=1597169428"
+    },
+    {
+      "genre": "Crime",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/phantommenace_480x.progressive.jpg?v=1632578559"
+    },
+    {
+      "genre": "Drama",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/received_188443509130467_480x.progressive.jpg?v=1583518859"
+    },
+	{
+      "genre": "Crime",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/phantommenace_480x.progressive.jpg?v=1632578559"
+    },
+    {
+      "genre": "Sci-Fi",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/phantommenace_480x.progressive.jpg?v=1632578559"
+    },
+    {
+      "genre": "Horror",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/phantommenace_480x.progressive.jpg?v=1632578559"
+    },
+    {
+      "genre": "Mystery",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/phantommenace_480x.progressive.jpg?v=1632578559"
+    },
+    {
+      "genre": "Thriller",
+      "imageURL": "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/phantommenace_480x.progressive.jpg?v=1632578559"
+    }
+]
