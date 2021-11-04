@@ -19,16 +19,18 @@ class SplashActivity : AppCompatActivity() {
 
         if(firebaseUser != null){
             activityOpener.openActivity(this,MainActivity::class.java)
+
         }
         else{
             setContentView(R.layout.activity_splash)
             var timer = Thread(){
                 kotlin.run {
                     try {
-                        sleep(1000)
+                        sleep(500)
                     }catch (e: InterruptedException){}
                     finally {
                         activityOpener.openActivity(this,LogInActivity::class.java)
+
                     }
                 }
             }

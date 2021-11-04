@@ -8,7 +8,7 @@ open class ActivityOpener:AppCompatActivity() {
     open fun openActivity(context: Context,nextActivity: Class<*>){
         val intent = Intent(context.applicationContext,nextActivity)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        finishActivity(1234)
         context.startActivity(intent)
-        finish()
     }
 }

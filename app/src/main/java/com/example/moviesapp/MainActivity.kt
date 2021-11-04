@@ -32,17 +32,18 @@ class MainActivity : AppCompatActivity(),Communicator {
     val homeFragment = HomeFragment()
     val dashboardFragment = DashboardFragment()
     val libraryFragment = LibraryFragment()
-
+    var nav: BottomNavigationView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val nav: BottomNavigationView = findViewById(R.id.bottomNav)
+
+        nav= findViewById(R.id.bottomNav)
         switchFragment(homeFragment,null)
 
-        nav.setOnNavigationItemSelectedListener {
+        nav?.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.home -> switchFragment(homeFragment,null)
+                R.id.home -> supportFragmentManager.beginTransaction().apply { replace(R.id.mainActivity,homeFragment).commit() }
                 R.id.dashboard -> switchFragment(dashboardFragment,null)
                 R.id.library -> switchFragment(libraryFragment,null)
             }
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(),Communicator {
         fragment.arguments = bundle
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.mainActivity,fragment)
+            addToBackStack("home")
             commit()
         }
     }
@@ -63,5 +65,23 @@ class MainActivity : AppCompatActivity(),Communicator {
         val bundle = Bundle()
         bundle.putInt("genrePosition",data)
         switchFragment(fragment,bundle)
+    }
+    override fun passMovie(fragment: Fragment,genre:Int, movie:Int){
+        val bundle = Bundle()
+        bundle.putInt("genrePosition",genre)
+        bundle.putInt("moviePosition",movie)
+        switchFragment(fragment,bundle)
+    }
+
+    override fun onBackPressed() {
+        val fragments = supportFragmentManager.fragments
+        if(fragments.get(fragments.size-1) == dashboardFragment || fragments.get(fragments.size-1) == libraryFragment) {
+            supportFragmentManager.beginTransaction()
+                .apply { replace(R.id.mainActivity, homeFragment).commit() }
+            nav?.selectedItemId = R.id.home
+        }
+        else
+            supportFragmentManager.popBackStack()
+
     }
 }

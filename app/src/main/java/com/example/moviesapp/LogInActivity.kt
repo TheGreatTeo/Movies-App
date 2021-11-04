@@ -5,6 +5,10 @@ import android.os.Bundle
 import com.example.moviesapp.controller.callback
 import com.example.moviesapp.fragments.LogInFragment
 import com.example.moviesapp.fragments.SignUpFragment
+import android.content.Intent
+
+
+
 
 class LogInActivity : AppCompatActivity(), callback {
 
@@ -35,4 +39,5 @@ class LogInActivity : AppCompatActivity(), callback {
     override fun changeFragment() {
         switchToSignUp()
     }
+
 }

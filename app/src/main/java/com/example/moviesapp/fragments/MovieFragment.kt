@@ -65,7 +65,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
     }
 
     override fun onItemClick(position: Int) {
-        communicator.passData(movieDetailsFragment,position)
+        communicator.passMovie(movieDetailsFragment,this.position,position)
     }
 
 }

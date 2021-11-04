@@ -1,10 +1,13 @@
 package com.example.moviesapp.controller
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.moviesapp.LogInActivity
 import com.example.moviesapp.MainActivity
 import com.example.moviesapp.data.User
 import com.google.android.gms.tasks.OnCompleteListener
@@ -15,7 +18,7 @@ import java.lang.Exception
 import java.lang.StringBuilder
 import java.security.MessageDigest
 
-open class AuthHandler(auth: FirebaseAuth, context: Context) {
+open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity() {
 
     private val sharedPrefsHandler = SharedPrefsHandler()
     private var auth : FirebaseAuth
@@ -62,6 +65,16 @@ open class AuthHandler(auth: FirebaseAuth, context: Context) {
             confirmPasswordText.requestFocus()
             return
         }
+        if(email.isEmpty()){
+            emailText.setError("Email is requierd")
+            emailText.requestFocus()
+            return
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            emailText.setError("Invalid email")
+            emailText.requestFocus()
+            return
+        }
 
         if(password.isEmpty()){
             passwordText.setError("Password is requierd")
@@ -73,16 +86,7 @@ open class AuthHandler(auth: FirebaseAuth, context: Context) {
             passwordText.requestFocus()
             return
         }
-        if(email.isEmpty()){
-            emailText.setError("Email is requierd")
-            emailText.requestFocus()
-            return
-        }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            emailText.setError("Invalid email")
-            emailText.requestFocus()
-            return
-        }
+
 
         auth.createUserWithEmailAndPassword(email,getMD5(password)).addOnCompleteListener(
             OnCompleteListener { task ->
@@ -113,11 +117,6 @@ open class AuthHandler(auth: FirebaseAuth, context: Context) {
         val email = emailText.text.toString()
         val password = passwordText.text.toString()
 
-        if(password.isEmpty()){
-            passwordText.setError("Password is requierd")
-            passwordText.requestFocus()
-            return
-        }
         if(email.isEmpty()){
             emailText.setError("Email is requierd")
             emailText.requestFocus()
@@ -126,6 +125,11 @@ open class AuthHandler(auth: FirebaseAuth, context: Context) {
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             emailText.setError("Invalid email")
             emailText.requestFocus()
+            return
+        }
+        if(password.isEmpty()){
+            passwordText.setError("Password is requierd")
+            passwordText.requestFocus()
             return
         }
 
@@ -140,5 +144,4 @@ open class AuthHandler(auth: FirebaseAuth, context: Context) {
                 }
             })
     }
-
 }
