@@ -8,7 +8,7 @@ import com.example.moviesapp.R
 import com.example.moviesapp.data.GenreItem
 import com.example.moviesapp.data.MovieItem
 
-class GenreAdapter(private val genreList: List<GenreItem>) : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
+class GenreAdapter(private val genreList: List<GenreItem>,private val listener: OnItemClickListener) : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.genres, parent, false)
@@ -25,8 +25,23 @@ class GenreAdapter(private val genreList: List<GenreItem>) : RecyclerView.Adapte
     override fun getItemCount() = genreList.size
 
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         val genreImage: ImageView = itemView.findViewById(R.id.genreImage)
         val genre: TextView = itemView.findViewById(R.id.genre)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = bindingAdapterPosition
+            if(position != RecyclerView.NO_POSITION)
+                listener.onItemClick(position)
+        }
     }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
+
 }

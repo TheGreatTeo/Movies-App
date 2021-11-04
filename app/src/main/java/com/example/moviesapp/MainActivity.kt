@@ -11,6 +11,7 @@ import androidx.appcompat.view.menu.MenuView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviesapp.controller.Communicator
 import com.example.moviesapp.controller.MovieAdapter
 import com.example.moviesapp.controller.SharedPrefsHandler
 import com.example.moviesapp.data.MovieItem
@@ -26,7 +27,7 @@ import org.json.JSONArray
 import java.io.IOException
 import java.net.URI
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),Communicator {
 
     val homeFragment = HomeFragment()
     val dashboardFragment = DashboardFragment()
@@ -37,23 +38,30 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val nav: BottomNavigationView = findViewById(R.id.bottomNav)
-        switchFragment(homeFragment)
+        switchFragment(homeFragment,null)
 
         nav.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.home -> switchFragment(homeFragment)
-                R.id.dashboard -> switchFragment(dashboardFragment)
-                R.id.library -> switchFragment(libraryFragment)
+                R.id.home -> switchFragment(homeFragment,null)
+                R.id.dashboard -> switchFragment(dashboardFragment,null)
+                R.id.library -> switchFragment(libraryFragment,null)
             }
             true
         }
 
     }
 
-    private fun switchFragment(fragment: Fragment){
+    private fun switchFragment(fragment: Fragment,bundle: Bundle?){
+        fragment.arguments = bundle
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.mainActivity,fragment)
             commit()
         }
+    }
+
+    override fun passData(fragment: Fragment,data: Int) {
+        val bundle = Bundle()
+        bundle.putInt("genrePosition",data)
+        switchFragment(fragment,bundle)
     }
 }

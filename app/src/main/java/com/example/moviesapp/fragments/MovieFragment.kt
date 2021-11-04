@@ -1,44 +1,49 @@
 package com.example.moviesapp.fragments
 
-import GenreAdapter
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.Communicator
+import com.example.moviesapp.controller.MovieAdapter
 import com.example.moviesapp.data.GenreItem
+import com.example.moviesapp.data.MovieItem
 import org.json.JSONArray
 import java.io.IOException
 
-class DashboardFragment : Fragment(R.layout.fragment_dashboard),GenreAdapter.OnItemClickListener {
+class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClickListener {
 
     private lateinit var communicator: Communicator
-    private val movieFragment = MovieFragment()
-    private var recyclerView: RecyclerView? = null
+    var position: Int = -1
+    var movieDetailsFragment = MovieDetailsFragment()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        var recyclerView: RecyclerView = view.findViewById(R.id.genreList)
-        val jsonArray = readJSON()
-        val genreList = ArrayList<GenreItem>()
+        val view = inflater.inflate(R.layout.fragment_movie, container, false)
+
+        position = arguments?.getInt("genrePosition")!!
+        Log.d("genrePosition",position.toString())
+
+        var recyclerView: RecyclerView = view.findViewById(R.id.movieList)
+        val jsonArray = readJSON().getJSONArray(position)
+        var movieList = ArrayList<MovieItem>()
 
         communicator = activity as Communicator
 
         for(i in 0 until jsonArray.length()){
-            val genre = jsonArray.getJSONObject(i).getString("genre")
-            val genreItem = GenreItem(genre,R.drawable.action_crop)
-            genreList.add(genreItem)
+            val title = jsonArray.getJSONObject(i).getString("title")
+            val rating = jsonArray.getJSONObject(i).getDouble("rating")
+            val movieItem = MovieItem(R.drawable.poster,title,rating)
+            movieList.add(movieItem)
         }
 
-        recyclerView.adapter = GenreAdapter(genreList,this)
+        recyclerView.adapter = MovieAdapter(movieList,this)
         recyclerView.layoutManager = LinearLayoutManager(context!!.applicationContext)
         recyclerView.setHasFixedSize(true)
 
@@ -49,7 +54,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard),GenreAdapter.OnI
         var json: String? = null
         var jsonArray: JSONArray = JSONArray()
         try{
-            val inputStream = resources.openRawResource(resources.getIdentifier("genres","raw",context!!.applicationContext.packageName))
+            val inputStream = resources.openRawResource(resources.getIdentifier("movies","raw",context!!.applicationContext.packageName))
             json = inputStream.bufferedReader().use { it.readText() }
 
             jsonArray = JSONArray(json)
@@ -60,6 +65,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard),GenreAdapter.OnI
     }
 
     override fun onItemClick(position: Int) {
-        communicator.passData(movieFragment,position)
+        communicator.passData(movieDetailsFragment,position)
     }
+
 }
