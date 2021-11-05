@@ -21,16 +21,18 @@ class LogInActivity : AppCompatActivity(), callback {
 
         switchToLogIn()
     }
-    private fun switchToLogIn(){
+
+    private fun switchToLogIn() {
         logInFragment.getCallbackFragment(this)
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frameLogIn,logInFragment)
+            replace(R.id.frameLogIn, logInFragment)
             commit()
         }
     }
-    private fun switchToSignUp(){
+
+    private fun switchToSignUp() {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frameLogIn,signUpFragment)
+            replace(R.id.frameLogIn, signUpFragment)
             addToBackStack(null)
             commit()
         }
@@ -40,4 +42,16 @@ class LogInActivity : AppCompatActivity(), callback {
         switchToSignUp()
     }
 
+    override fun onBackPressed() {
+        val fragments = supportFragmentManager.fragments
+        if (fragments.get(fragments.size - 1) != signUpFragment) {
+            val startMain = Intent(Intent.ACTION_MAIN)
+            startMain.addCategory(Intent.CATEGORY_HOME)
+            startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(startMain)
+        }
+        else{
+            super.onBackPressed()
+        }
+    }
 }

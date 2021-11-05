@@ -18,12 +18,6 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
 
     var callbackFragment:callback? = null
 
-    override fun onAttach(context: Context) {
-        var sharedPrefs = context.getSharedPreferences("users",Context.MODE_PRIVATE)
-        var editor = sharedPrefs.edit()
-        super.onAttach(context)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

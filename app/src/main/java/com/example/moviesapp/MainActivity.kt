@@ -18,6 +18,7 @@ import com.example.moviesapp.data.MovieItem
 import com.example.moviesapp.fragments.DashboardFragment
 import com.example.moviesapp.fragments.HomeFragment
 import com.example.moviesapp.fragments.LibraryFragment
+import com.example.moviesapp.fragments.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenu
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
@@ -32,11 +33,12 @@ class MainActivity : AppCompatActivity(),Communicator {
     val homeFragment = HomeFragment()
     val dashboardFragment = DashboardFragment()
     val libraryFragment = LibraryFragment()
+    val settingsFragment = SettingsFragment()
     var nav: BottomNavigationView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         nav= findViewById(R.id.bottomNav)
         switchFragment(homeFragment,null)
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity(),Communicator {
                 R.id.home -> supportFragmentManager.beginTransaction().apply { replace(R.id.mainActivity,homeFragment).commit() }
                 R.id.dashboard -> switchFragment(dashboardFragment,null)
                 R.id.library -> switchFragment(libraryFragment,null)
+                R.id.settings -> switchFragment(settingsFragment,null)
             }
             true
         }
@@ -75,7 +78,7 @@ class MainActivity : AppCompatActivity(),Communicator {
 
     override fun onBackPressed() {
         val fragments = supportFragmentManager.fragments
-        if(fragments.get(fragments.size-1) == dashboardFragment || fragments.get(fragments.size-1) == libraryFragment) {
+        if(fragments.get(fragments.size-1) == dashboardFragment || fragments.get(fragments.size-1) == libraryFragment || fragments.get(fragments.size-1) == settingsFragment) {
             supportFragmentManager.beginTransaction()
                 .apply { replace(R.id.mainActivity, homeFragment).commit() }
             nav?.selectedItemId = R.id.home

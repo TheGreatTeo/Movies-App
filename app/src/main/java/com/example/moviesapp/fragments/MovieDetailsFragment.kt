@@ -11,6 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.Communicator
+import com.example.moviesapp.data.MovieLibrary
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONArray
 import java.io.IOException
 
@@ -39,6 +43,20 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         rating.text = "⭐"+movie.getDouble("rating")
         description.text = movie.getString("description")
         image.setImageResource(R.drawable.poster)
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userID = currentUser?.uid
+        val movieLibrary = MovieLibrary(genrePosition,moviePosition,userID.toString())
+
+        addToWatchList.setOnClickListener {
+            FirebaseFirestore.getInstance().collection("movieLibrary").add(movieLibrary).addOnCompleteListener(
+                OnCompleteListener { task ->
+                    if(task.isSuccessful){
+                        addToWatchList.text = "ADDED"
+                    }
+                })
+        }
+
 
         return view
     }
