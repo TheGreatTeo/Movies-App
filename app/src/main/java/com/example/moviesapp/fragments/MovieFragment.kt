@@ -27,6 +27,8 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movie, container, false)
 
+        communicator = activity as Communicator
+
         position = arguments?.getInt("genrePosition")!!
         Log.d("genrePosition",position.toString())
 
@@ -34,12 +36,12 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
         val jsonArray = readJSON().getJSONArray(position)
         var movieList = ArrayList<MovieItem>()
 
-        communicator = activity as Communicator
 
         for(i in 0 until jsonArray.length()){
             val title = jsonArray.getJSONObject(i).getString("title")
             val rating = jsonArray.getJSONObject(i).getDouble("rating")
-            val movieItem = MovieItem(R.drawable.poster,title,rating)
+            val imageURI = jsonArray.getJSONObject(i).getString("imageURL")
+            val movieItem = MovieItem(imageURI,title,rating)
             movieList.add(movieItem)
         }
 

@@ -1,6 +1,7 @@
 package com.example.moviesapp.controller
 
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,7 @@ class MovieAdapter(private val movieList: List<MovieItem>,private val listener: 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentMovie = movieList[position]
 
-        holder.imageView.setImageResource(currentMovie.imageResource)
+        holder.imageView.setImageURI(Uri.parse(currentMovie.imageResource))
         holder.title.text = currentMovie.title
         holder.rating.text = "⭐"+currentMovie.rating.toString()
     }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
+import com.example.moviesapp.controller.Communicator
 import com.example.moviesapp.controller.MovieAdapter
 import com.example.moviesapp.data.MovieItem
 import com.google.android.gms.tasks.OnSuccessListener
@@ -20,22 +21,28 @@ import org.json.JSONArray
 import java.io.IOException
 
 class LibraryFragment : Fragment(R.layout.fragment_library),MovieAdapter.OnItemClickListener {
+    private lateinit var communicator: Communicator
+    var position: Int = -1
+    var movieList = ArrayList<MovieItem>()
+    var movieDetailsFragment = MovieDetailsFragment()
+    val userID = FirebaseAuth.getInstance().currentUser?.uid
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_library, container, false)
 
+        communicator = activity as Communicator
+        movieList = ArrayList<MovieItem>()
         var recyclerView: RecyclerView = view.findViewById(R.id.movieLibraryList)
-        var movieList = ArrayList<MovieItem>()
-        val userID = FirebaseAuth.getInstance().currentUser?.uid
 
         FirebaseFirestore.getInstance().collection("movieLibrary").whereEqualTo("userID",userID).get().addOnSuccessListener(
             OnSuccessListener { documents ->
                 for(document in documents){
                     Log.d("Docu",document.id)
                     val jsonObject = readJSON().getJSONArray(document.getLong("genrePos")!!.toInt()).getJSONObject(document.getLong("moviePos")!!.toInt())
-                    val movieItem = MovieItem(R.drawable.poster,jsonObject.getString("title"),jsonObject.getDouble("rating"))
+                    val movieItem = MovieItem(jsonObject.getString("imageURL"),jsonObject.getString("title"),jsonObject.getDouble("rating"))
                     movieList.add(movieItem)
 
                     recyclerView.adapter = MovieAdapter(movieList,this)
@@ -63,6 +70,13 @@ class LibraryFragment : Fragment(R.layout.fragment_library),MovieAdapter.OnItemC
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        FirebaseFirestore.getInstance().collection("movieLibrary").whereEqualTo("userID",userID).get().addOnSuccessListener(
+            OnSuccessListener { documents ->
+                for(document in documents){
+                    communicator.passMovie(movieDetailsFragment,document.getLong("genrePos")!!.toInt(),document.getLong("moviePos")!!.toInt())
+                    return@OnSuccessListener
+                }
+            })
+
     }
 }

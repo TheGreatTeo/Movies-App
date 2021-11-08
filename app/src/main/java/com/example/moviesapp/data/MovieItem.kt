@@ -1,5 +1,7 @@
 package com.example.moviesapp.data
 
-data class MovieItem(val imageResource: Int,val title: String, val rating: Double){
+import android.net.Uri
+
+data class MovieItem(val imageResource: String, val title: String, val rating: Double){
 
 }

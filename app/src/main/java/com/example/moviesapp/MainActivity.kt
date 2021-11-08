@@ -1,5 +1,6 @@
 package com.example.moviesapp
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -82,6 +83,12 @@ class MainActivity : AppCompatActivity(),Communicator {
             supportFragmentManager.beginTransaction()
                 .apply { replace(R.id.mainActivity, homeFragment).commit() }
             nav?.selectedItemId = R.id.home
+        }
+        else if(fragments.get(fragments.size-1) == homeFragment){
+            val startMain = Intent(Intent.ACTION_MAIN)
+            startMain.addCategory(Intent.CATEGORY_HOME)
+            startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(startMain)
         }
         else
             supportFragmentManager.popBackStack()

@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth
 class LogInFragment : Fragment(R.layout.login_fragment) {
 
     var callbackFragment:callback? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,7 +33,7 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
 
         logInButton.setOnClickListener{
             Log.d("LogIn","DA")
-            authHandler.userLogIn(email,password)
+            authHandler.userLogIn(email!!,password!!)
         }
 
         signUpButton.setOnClickListener{
@@ -47,5 +46,17 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
 
     fun getCallbackFragment(callbackFragment: callback){
         this.callbackFragment = callbackFragment
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("onSaveInstanceState","ceva")
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if(savedInstanceState != null){
+            Log.d("onActivityCreated","ceva")
+        }
     }
 }

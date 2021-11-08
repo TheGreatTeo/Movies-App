@@ -1,11 +1,12 @@
 package com.example.moviesapp.data
 
-class User(email: String, password: String) {
-    private var email: String = ""
-    private var password: String = ""
+open class User(email: String, password: String) {
+    var email: String = ""
+    var password: String = ""
 
     init {
         this.email = email
         this.password = password
     }
+
 }

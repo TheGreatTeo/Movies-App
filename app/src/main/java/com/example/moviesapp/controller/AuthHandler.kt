@@ -97,6 +97,8 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
                         OnCompleteListener { task ->
                             if(task.isSuccessful){
                                 Toast.makeText(context.applicationContext,"Successfully registered",Toast.LENGTH_SHORT).show()
+                                sharedPrefsHandler.setEmail(context.applicationContext,email)
+                                activityOpener.openActivity(context,MainActivity::class.java)
                             }
                             else{
                                 Toast.makeText(context.applicationContext,"Not successfull",Toast.LENGTH_SHORT).show()
