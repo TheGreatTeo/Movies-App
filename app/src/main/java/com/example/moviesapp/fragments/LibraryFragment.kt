@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
@@ -36,10 +37,12 @@ class LibraryFragment : Fragment(R.layout.fragment_library),MovieAdapter.OnItemC
         communicator = activity as Communicator
         movieList = ArrayList<MovieItem>()
         var recyclerView: RecyclerView = view.findViewById(R.id.movieLibraryList)
+        var noContent: TextView = view.findViewById(R.id.noContent)
 
         FirebaseFirestore.getInstance().collection("movieLibrary").whereEqualTo("userID",userID).get().addOnSuccessListener(
             OnSuccessListener { documents ->
                 for(document in documents){
+                    noContent.visibility = View.INVISIBLE
                     Log.d("Docu",document.id)
                     val jsonObject = readJSON().getJSONArray(document.getLong("genrePos")!!.toInt()).getJSONObject(document.getLong("moviePos")!!.toInt())
                     val movieItem = MovieItem(jsonObject.getString("imageURL"),jsonObject.getString("title"),jsonObject.getDouble("rating"))
@@ -49,7 +52,7 @@ class LibraryFragment : Fragment(R.layout.fragment_library),MovieAdapter.OnItemC
                     recyclerView.layoutManager = LinearLayoutManager(context!!.applicationContext)
                     recyclerView.setHasFixedSize(true)
                 }
-            })
+            }).addOnFailureListener { noContent.visibility = View.VISIBLE }
 
 
         return view
