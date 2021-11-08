@@ -52,19 +52,23 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userID = currentUser?.uid
         val movieLibrary = MovieLibrary(genrePosition,moviePosition,userID.toString())
+
+        added = false
+
         FirebaseFirestore.getInstance().collection("movieLibrary").whereEqualTo("userID",userID).get().addOnSuccessListener(
             OnSuccessListener { documents ->
                 for(document in documents){
-                    Log.d("ID123","ID")
+                    Log.d("ADDED",added.toString())
                     if(genrePosition.toString() == document.get("genrePos").toString() && moviePosition.toString() == document.get("moviePos").toString()) {
                         addToWatchList.setBackgroundColor(addToWatchList.context.resources.getColor(R.color.red))
                         addToWatchList.text = "ADDED"
                         added = true
+                        Log.d("ADDED",added.toString())
                     }
                 }
             })
         addToWatchList.setOnClickListener {
-            Log.d("added",added.toString())
+            Log.d("ADDED",added.toString())
             if(!added) {
                 FirebaseFirestore.getInstance().collection("movieLibrary").add(movieLibrary)
                     .addOnCompleteListener(

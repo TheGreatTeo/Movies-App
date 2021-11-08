@@ -18,7 +18,7 @@ class LogInActivity : AppCompatActivity(), callback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
 
-
+        /*
         if(savedInstanceState != null){
             if(supportFragmentManager.getFragment(savedInstanceState,"fragment") == logInFragment) {
                 switchFragment(logInFragment)
@@ -29,6 +29,8 @@ class LogInActivity : AppCompatActivity(), callback {
         }
         else
             switchToLogIn()
+         */
+        switchToLogIn()
     }
 
     private fun switchToLogIn() {
@@ -74,9 +76,11 @@ class LogInActivity : AppCompatActivity(), callback {
 
     }
 
+    /*
     override fun onSaveInstanceState(outState: Bundle) {
         val fragments = supportFragmentManager.fragments
         supportFragmentManager.putFragment(outState,"fragment",fragments.get(fragments.size-1))
         super.onSaveInstanceState(outState)
     }
+     */
 }
