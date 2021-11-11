@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviesapp.CoroutinesHomework
 import com.example.moviesapp.LogInActivity
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.ActivityOpener
@@ -30,12 +31,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
         val signOutButton: Button = view.findViewById(R.id.signOut)
+        val toCoroutine: Button = view.findViewById(R.id.toCoroutine)
 
         signOutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            sharedPrefsHandler.clearEmail(context!!.applicationContext)
-            activityOpener.openActivity(context!!.applicationContext,LogInActivity::class.java)
-            activity!!.finish()
+            sharedPrefsHandler.clearEmail(requireContext().applicationContext)
+            activityOpener.openActivity(requireContext().applicationContext,LogInActivity::class.java)
+            requireActivity().finish()
+        }
+
+        toCoroutine.setOnClickListener {
+            activityOpener.openActivity(requireContext().applicationContext,CoroutinesHomework::class.java)
         }
         return view
     }
