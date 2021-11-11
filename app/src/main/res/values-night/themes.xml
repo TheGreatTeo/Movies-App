@@ -36,4 +36,10 @@
     <style name="nav" parent="Widget.Design.BottomNavigationView">
         <item name="android:background">@color/blue_700</item>
     </style>
+
+    <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splashphoto</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="backgroundColor">@color/white</item>
+    </style>
 </resources>
