@@ -1,5 +1,15 @@
 <resources>
-    <string name="app_name">Movies App</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name" translatable="false">Movies App</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="passwordHint">Password</string>
+    <string name="confirmPasswordHint">Confirm password</string>
+    <string name="emailHint">Email</string>
+    <string name="logIn">Log In</string>
+    <string name="signUp">Sign Up</string>
+    <string name="passwordForgot">Forgot password</string>
+    <string name="home">Home</string>
+    <string name="genres">Genres</string>
+    <string name="library">Library</string>
+    <string name="settings">Settings</string>
+    <string name="changeLanguageTitle">Choose the language</string>
 </resources>

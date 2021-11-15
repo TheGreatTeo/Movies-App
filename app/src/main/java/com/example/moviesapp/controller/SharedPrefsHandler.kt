@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 open class SharedPrefsHandler {
 
     val PREF_EMAIL = "email"
+    val PREF_LANGUAGE = "language"
 
     fun getSharedPrefs(ctx: Context): SharedPreferences{
         return PreferenceManager.getDefaultSharedPreferences(ctx)
@@ -25,5 +26,14 @@ open class SharedPrefsHandler {
         val editor = getSharedPrefs(ctx).edit()
         editor.remove(PREF_EMAIL)
         editor.commit()
+    }
+
+    open fun setLanguage(ctx: Context, language: String){
+        val editor = getSharedPrefs(ctx).edit()
+        editor.putString(PREF_LANGUAGE,language)
+        editor.commit()
+    }
+    open fun getLanguage(ctx: Context): String{
+        return getSharedPrefs(ctx).getString(PREF_LANGUAGE,"").toString()
     }
 }

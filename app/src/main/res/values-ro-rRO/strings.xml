@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movies App</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="passwordHint">Parola</string>
+    <string name="confirmPasswordHint">Confirmare parola</string>
+    <string name="emailHint">Email</string>
+    <string name="logIn">Autentificare</string>
+    <string name="signUp">Inregistrare</string>
+    <string name="passwordForgot">Parola uitata</string>
+    <string name="home">Acasa</string>
+    <string name="genres">Genuri</string>
+    <string name="library">Librarie</string>
+    <string name="settings">Setari</string>
+    <string name="changeLanguageTitle">Alege limba</string>
+</resources>
