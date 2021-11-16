@@ -16,6 +16,7 @@ class LogInActivity : AppCompatActivity(), callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_New)
         setContentView(R.layout.activity_log_in)
 
         /*

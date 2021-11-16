@@ -35,16 +35,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         progressBar.visibility = View.VISIBLE
         textView.visibility = View.GONE
         lifecycleScope.launch(Dispatchers.IO) {
-            delay(2000L)
+            delay(500L)
             val tmdbInterface = TMDBInterface.create().getTopRatedMovies("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
             if(tmdbInterface.isSuccessful){
                 val data = tmdbInterface.body()
                 Log.d("Raspuns",data.toString())
-            }
-            val genre = TMDBInterface.create().getGenres("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
-            if(genre.isSuccessful){
-                val data = genre.body()
-                Log.d("Genres",data.toString())
             }
             val title = IMDBInterface.create().searchTitle("k_m2duxbz7","Harry Potter").awaitResponse()
             if(title.isSuccessful){

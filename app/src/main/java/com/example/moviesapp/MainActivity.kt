@@ -1,33 +1,25 @@
 package com.example.moviesapp
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.view.menu.MenuView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
+import com.example.moviesapp.API.IMDBInterface
+import com.example.moviesapp.API.TMDBInterface
 import com.example.moviesapp.controller.Communicator
-import com.example.moviesapp.controller.MovieAdapter
-import com.example.moviesapp.controller.SharedPrefsHandler
-import com.example.moviesapp.data.MovieItem
 import com.example.moviesapp.fragments.DashboardFragment
 import com.example.moviesapp.fragments.HomeFragment
 import com.example.moviesapp.fragments.LibraryFragment
 import com.example.moviesapp.fragments.SettingsFragment
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationMenu
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
-import org.json.JSONArray
-import java.io.IOException
-import java.net.URI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.awaitResponse
 
 class MainActivity : AppCompatActivity(),Communicator {
 
@@ -39,7 +31,9 @@ class MainActivity : AppCompatActivity(),Communicator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_New)
         setContentView(R.layout.activity_main)
+
 
         nav= findViewById(R.id.bottomNav)
         switchFragment(homeFragment,null)
