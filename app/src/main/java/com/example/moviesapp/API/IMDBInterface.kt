@@ -4,26 +4,23 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface TMDBInterface {
+interface IMDBInterface {
 
-    @GET("/3/movie/top_rated")
-    fun getTopRatedMovies(@Query("api_key") api_key: String): Call<TMDBJSON>
-
-    @GET("/3/genre/movie/list")
-    fun getGenres(@Query("api_key") api_key: String): Call<GenreJSON>
+    @GET("/en/API/SearchTitle/{api_key}/{title}")
+    fun searchTitle(@Path("api_key") api_key: String, @Path("title") title: String): Call<TitleJSON>
 
     companion object{
-        var BASE_URL = "https://api.themoviedb.org"
+        var BASE_URL = "https://imdb-api.com"
 
-        fun create(): TMDBInterface{
+        fun create(): IMDBInterface {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BASE_URL)
                 .build()
-            return retrofit.create(TMDBInterface::class.java)
+            return retrofit.create(IMDBInterface::class.java)
         }
     }
-
 }
