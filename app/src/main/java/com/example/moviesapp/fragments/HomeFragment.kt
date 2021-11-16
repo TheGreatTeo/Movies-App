@@ -41,7 +41,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val data = tmdbInterface.body()
                 Log.d("Raspuns",data.toString())
             }
-
             val title = IMDBInterface.create().searchTitle("k_m2duxbz7","Harry Potter").awaitResponse()
             if(title.isSuccessful){
                 val data = title.body()
