@@ -1,6 +1,5 @@
-package com.example.moviesapp.fragments
+package com.example.moviesapp.fragments.LogInActivityFragments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 class LogInFragment : Fragment(R.layout.login_fragment) {
 
     var callbackFragment:callback? = null
+    private var email: EditText? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,8 +28,9 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
         val authHandler = AuthHandler(auth,view.context.applicationContext)
         var logInButton: Button = view.findViewById(R.id.logInButton)
         var signUpButton: Button = view.findViewById(R.id.signUp)
-        var email: EditText = view.findViewById(R.id.email)
+        email = view.findViewById(R.id.email)
         var password: EditText = view.findViewById(R.id.password)
+        var emailCopy = email
 
         logInButton.setOnClickListener{
             Log.d("LogIn","DA")
@@ -50,13 +51,16 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        Log.d("onSaveInstanceState","ceva")
+        outState.putString("email",email?.text.toString())
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        Log.d("LogIn","AICI")
+        var emailText = ""
         if(savedInstanceState != null){
-            Log.d("onActivityCreated","ceva")
+            emailText = savedInstanceState.getString("email").toString()
+            email!!.setText(emailText)
         }
     }
 }

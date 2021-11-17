@@ -1,11 +1,11 @@
-package com.example.moviesapp
+package com.example.moviesapp.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
+import com.example.moviesapp.R
 import kotlinx.coroutines.*
 
 class CoroutinesHomework : AppCompatActivity() {

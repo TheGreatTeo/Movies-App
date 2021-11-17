@@ -1,28 +1,21 @@
-package com.example.moviesapp.fragments
+package com.example.moviesapp.fragments.MainActivityFragments
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.recreate
-import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesapp.CoroutinesHomework
-import com.example.moviesapp.LogInActivity
+import com.example.moviesapp.Activities.CoroutinesHomework
+import com.example.moviesapp.Activities.LogInActivity
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.ActivityOpener
 import com.example.moviesapp.controller.SharedPrefsHandler
-import com.example.moviesapp.data.GenreItem
 import com.google.firebase.auth.FirebaseAuth
-import org.json.JSONArray
-import java.io.IOException
 import java.util.*
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
@@ -43,12 +36,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         signOutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             sharedPrefsHandler.clearEmail(requireContext().applicationContext)
-            activityOpener.openActivity(requireContext().applicationContext,LogInActivity::class.java)
+            activityOpener.openActivity(requireContext().applicationContext, LogInActivity::class.java)
             requireActivity().finish()
         }
 
         toCoroutine.setOnClickListener {
-            activityOpener.openActivity(requireContext().applicationContext,CoroutinesHomework::class.java)
+            activityOpener.openActivity(requireContext().applicationContext, CoroutinesHomework::class.java)
         }
 
         changeLanguage.setOnClickListener {

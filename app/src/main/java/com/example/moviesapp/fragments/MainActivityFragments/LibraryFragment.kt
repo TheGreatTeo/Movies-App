@@ -1,6 +1,5 @@
-package com.example.moviesapp.fragments
+package com.example.moviesapp.fragments.MainActivityFragments
 
-import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,16 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.Communicator
-import com.example.moviesapp.controller.MovieAdapter
+import com.example.moviesapp.controller.RecyclerViewAdapters.MovieAdapter
 import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.fragments.MovieFragments.MovieDetailsFragment
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.gson.JsonObject
 import org.json.JSONArray
 import java.io.IOException
 
-class LibraryFragment : Fragment(R.layout.fragment_library),MovieAdapter.OnItemClickListener {
+class LibraryFragment : Fragment(R.layout.fragment_library), MovieAdapter.OnItemClickListener {
     private lateinit var communicator: Communicator
     var position: Int = -1
     var movieList = ArrayList<MovieItem>()

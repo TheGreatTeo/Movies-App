@@ -1,4 +1,4 @@
-package com.example.moviesapp.fragments
+package com.example.moviesapp.fragments.MovieFragments
 
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.Communicator
-import com.example.moviesapp.controller.MovieAdapter
-import com.example.moviesapp.data.GenreItem
+import com.example.moviesapp.controller.RecyclerViewAdapters.MovieAdapter
 import com.example.moviesapp.data.MovieItem
 import org.json.JSONArray
 import java.io.IOException

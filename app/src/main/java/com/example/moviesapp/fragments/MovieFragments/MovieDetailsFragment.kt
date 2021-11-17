@@ -1,4 +1,4 @@
-package com.example.moviesapp.fragments
+package com.example.moviesapp.fragments.MovieFragments
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.example.moviesapp.R
-import com.example.moviesapp.controller.Communicator
 import com.example.moviesapp.data.MovieLibrary
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnSuccessListener

@@ -1,3 +1,5 @@
+package com.example.moviesapp.controller.RecyclerViewAdapters
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -6,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.data.GenreItem
-import com.example.moviesapp.data.MovieItem
 
 class GenreAdapter(private val genreList: List<GenreItem>,private val listener: OnItemClickListener) : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
 
