@@ -11,7 +11,7 @@
         <entry key="..\:/Movies-App/app/src/main/res/layout-land/fragment_movie_details.xml" value="0.33" />
         <entry key="..\:/Movies-App/app/src/main/res/layout-land/login_fragment.xml" value="0.33" />
         <entry key="..\:/Movies-App/app/src/main/res/layout-land/signup_fragment.xml" value="0.25" />
-        <entry key="..\:/Movies-App/app/src/main/res/layout/activity_log_in.xml" value="0.36666666666666664" />
+        <entry key="..\:/Movies-App/app/src/main/res/layout/activity_log_in.xml" value="0.25" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/activity_splash.xml" value="0.22" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_dashboard.xml" value="0.36666666666666664" />
@@ -22,7 +22,7 @@
         <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_movie_details.xml" value="0.20520833333333333" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_settings.xml" value="0.36666666666666664" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/genres.xml" value="0.33" />
-        <entry key="..\:/Movies-App/app/src/main/res/layout/login_fragment.xml" value="0.33" />
+        <entry key="..\:/Movies-App/app/src/main/res/layout/login_fragment.xml" value="0.22" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/movies.xml" value="0.36666666666666664" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/signup_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Movies-App/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />

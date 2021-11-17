@@ -1,4 +1,4 @@
-package com.example.moviesapp.API
+package com.example.moviesapp.API.tmdbAPI
 
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -17,7 +17,7 @@ interface TMDBInterface {
     companion object{
         var BASE_URL = "https://api.themoviedb.org"
 
-        fun create(): TMDBInterface{
+        fun create(): TMDBInterface {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BASE_URL)

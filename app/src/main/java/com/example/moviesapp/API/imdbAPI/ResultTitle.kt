@@ -1,4 +1,4 @@
-package com.example.moviesapp.API
+package com.example.moviesapp.API.imdbAPI
 
 data class ResultTitle(
     val description: String,

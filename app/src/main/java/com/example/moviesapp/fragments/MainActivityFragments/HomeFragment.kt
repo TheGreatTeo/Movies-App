@@ -1,4 +1,4 @@
-package com.example.moviesapp.fragments
+package com.example.moviesapp.fragments.MainActivityFragments
 
 import android.os.Bundle
 import android.util.Log
@@ -8,20 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesapp.API.IMDBInterface
-import com.example.moviesapp.API.TMDBInterface
+import com.example.moviesapp.API.imdbAPI.IMDBInterface
+import com.example.moviesapp.API.tmdbAPI.TMDBInterface
 import com.example.moviesapp.R
-import com.example.moviesapp.data.GenreItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
 import retrofit2.awaitResponse
-import java.io.IOException
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onCreateView(

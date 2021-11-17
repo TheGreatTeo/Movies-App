@@ -1,25 +1,16 @@
-package com.example.moviesapp
+package com.example.moviesapp.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import com.example.moviesapp.API.IMDBInterface
-import com.example.moviesapp.API.TMDBInterface
+import com.example.moviesapp.R
 import com.example.moviesapp.controller.Communicator
-import com.example.moviesapp.fragments.DashboardFragment
-import com.example.moviesapp.fragments.HomeFragment
-import com.example.moviesapp.fragments.LibraryFragment
-import com.example.moviesapp.fragments.SettingsFragment
+import com.example.moviesapp.fragments.MainActivityFragments.DashboardFragment
+import com.example.moviesapp.fragments.MainActivityFragments.HomeFragment
+import com.example.moviesapp.fragments.MainActivityFragments.LibraryFragment
+import com.example.moviesapp.fragments.MainActivityFragments.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.awaitResponse
 
 class MainActivity : AppCompatActivity(),Communicator {
 

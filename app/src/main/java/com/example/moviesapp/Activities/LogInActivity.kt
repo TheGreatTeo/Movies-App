@@ -1,12 +1,13 @@
-package com.example.moviesapp
+package com.example.moviesapp.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.moviesapp.controller.callback
-import com.example.moviesapp.fragments.LogInFragment
-import com.example.moviesapp.fragments.SignUpFragment
+import com.example.moviesapp.fragments.LogInActivityFragments.LogInFragment
+import com.example.moviesapp.fragments.LogInActivityFragments.SignUpFragment
 import android.content.Intent
 import androidx.fragment.app.Fragment
+import com.example.moviesapp.R
 
 
 class LogInActivity : AppCompatActivity(), callback {
@@ -19,19 +20,16 @@ class LogInActivity : AppCompatActivity(), callback {
         setTheme(R.style.Theme_New)
         setContentView(R.layout.activity_log_in)
 
-        /*
-        if(savedInstanceState != null){
-            if(supportFragmentManager.getFragment(savedInstanceState,"fragment") == logInFragment) {
-                switchFragment(logInFragment)
-            }
-            else if(supportFragmentManager.getFragment(savedInstanceState,"fragment") == signUpFragment) {
-                switchFragment(signUpFragment)
-            }
-        }
-        else
+        if(savedInstanceState == null)
             switchToLogIn()
-         */
-        switchToLogIn()
+        else{
+            val fragments = supportFragmentManager.fragments
+            if(fragments.get(fragments.size-1) == logInFragment)
+                switchToLogIn()
+            else
+                if(fragments.get(fragments.size-1) == signUpFragment)
+                    switchToSignUp()
+        }
     }
 
     private fun switchToLogIn() {
@@ -76,12 +74,10 @@ class LogInActivity : AppCompatActivity(), callback {
         }
 
     }
-
-    /*
     override fun onSaveInstanceState(outState: Bundle) {
         val fragments = supportFragmentManager.fragments
         supportFragmentManager.putFragment(outState,"fragment",fragments.get(fragments.size-1))
         super.onSaveInstanceState(outState)
     }
-     */
+
 }

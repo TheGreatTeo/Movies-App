@@ -1,14 +1,12 @@
 package com.example.moviesapp.controller
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.moviesapp.LogInActivity
-import com.example.moviesapp.MainActivity
+import com.example.moviesapp.Activities.MainActivity
 import com.example.moviesapp.data.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
@@ -98,7 +96,7 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
                             if(task.isSuccessful){
                                 Toast.makeText(context.applicationContext,"Successfully registered",Toast.LENGTH_SHORT).show()
                                 sharedPrefsHandler.setEmail(context.applicationContext,email)
-                                activityOpener.openActivity(context,MainActivity::class.java)
+                                activityOpener.openActivity(context, MainActivity::class.java)
                             }
                             else{
                                 Toast.makeText(context.applicationContext,"Not successfull",Toast.LENGTH_SHORT).show()
@@ -139,7 +137,7 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
             OnCompleteListener { task ->
                 if(task.isSuccessful){
                     sharedPrefsHandler.setEmail(context.applicationContext,email)
-                    activityOpener.openActivity(context,MainActivity::class.java)
+                    activityOpener.openActivity(context, MainActivity::class.java)
                 }
                 else{
                     Toast.makeText(context.applicationContext,"Unsuccessfully",Toast.LENGTH_SHORT).show()

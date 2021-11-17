@@ -1,17 +1,14 @@
-package com.example.moviesapp.controller
+package com.example.moviesapp.controller.RecyclerViewAdapters
 
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
 import com.example.moviesapp.data.MovieItem
-import java.net.URL
 
 class MovieAdapter(private val movieList: List<MovieItem>,private val listener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 

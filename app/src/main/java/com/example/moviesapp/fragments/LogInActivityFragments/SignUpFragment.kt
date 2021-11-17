@@ -1,4 +1,4 @@
-package com.example.moviesapp.fragments
+package com.example.moviesapp.fragments.LogInActivityFragments
 
 import android.content.Context
 import android.os.Bundle
@@ -28,7 +28,7 @@ class SignUpFragment : Fragment(R.layout.signup_fragment) {
         val view = inflater.inflate(R.layout.signup_fragment, container, false)
 
         val auth = FirebaseAuth.getInstance()
-        val authHandler = AuthHandler(auth,context!!.applicationContext)
+        val authHandler = AuthHandler(auth,requireContext().applicationContext)
         val signUpButton:Button = view.findViewById(R.id.signUp)
         val emailText: EditText = view.findViewById(R.id.emailSignUp)
         val passwordText: EditText = view.findViewById(R.id.passwordSignUp)

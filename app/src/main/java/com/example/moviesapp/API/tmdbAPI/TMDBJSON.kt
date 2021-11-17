@@ -1,4 +1,4 @@
-package com.example.moviesapp.API
+package com.example.moviesapp.API.tmdbAPI
 
 data class TMDBJSON(
     val page: Int,
