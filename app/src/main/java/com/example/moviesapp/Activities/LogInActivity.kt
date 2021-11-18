@@ -1,6 +1,7 @@
 package com.example.moviesapp.Activities
 
 import android.Manifest
+import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,8 @@ import com.example.moviesapp.fragments.LogInActivityFragments.LogInFragment
 import com.example.moviesapp.fragments.LogInActivityFragments.SignUpFragment
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,6 +39,11 @@ class LogInActivity : AppCompatActivity(), callback {
         else{
             requestLocationPermission()
         }
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+        Toast.makeText(this,if (isConnected) "Connected" else "Not connected",Toast.LENGTH_LONG)
+        Log.d("isConnected",isConnected.toString())
 
         if(savedInstanceState == null)
             switchToLogIn()
