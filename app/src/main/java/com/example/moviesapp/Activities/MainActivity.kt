@@ -70,10 +70,8 @@ class MainActivity : AppCompatActivity(),Communicator {
             nav?.selectedItemId = R.id.home
         }
         else if(fragments.get(fragments.size-1) == homeFragment){
-            val startMain = Intent(Intent.ACTION_MAIN)
-            startMain.addCategory(Intent.CATEGORY_HOME)
-            startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(startMain)
+            supportFragmentManager.popBackStack()
+            super.onBackPressed()
         }
         else
             supportFragmentManager.popBackStack()

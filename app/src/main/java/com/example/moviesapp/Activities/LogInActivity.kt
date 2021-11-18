@@ -20,6 +20,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.moviesapp.R
+import com.example.moviesapp.controller.ActivityOpener
+import com.example.moviesapp.controller.AuthHandler
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 
 
 class LogInActivity : AppCompatActivity(), callback {
@@ -27,10 +31,16 @@ class LogInActivity : AppCompatActivity(), callback {
     var signUpFragment = SignUpFragment()
     var logInFragment = LogInFragment()
     val LOCATION_PERMISSION_CODE  = 100
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    val activityOpener = ActivityOpener()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        if(currentUser != null){
+            activityOpener.openActivity(this,MainActivity::class.java)
+            this.finish()
+        }
         setTheme(R.style.Theme_New)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
 
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
