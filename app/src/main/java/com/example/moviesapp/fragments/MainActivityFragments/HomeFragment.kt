@@ -29,8 +29,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val textView: TextView = view.findViewById(R.id.textView)
         progressBar.visibility = View.VISIBLE
         textView.visibility = View.GONE
-        lifecycleScope.launch(Dispatchers.IO) {
-            delay(500L)
+        lifecycleScope.launch() {
+            test()
+            delay(200L)
+            progressBar.visibility = View.GONE
+            textView.visibility = View.VISIBLE
+        }
+
+        return view
+    }
+
+    suspend fun test(){
+        return withContext(Dispatchers.IO){
             val tmdbInterface = TMDBInterface.create().getTopRatedMovies("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
             if(tmdbInterface.isSuccessful){
                 val data = tmdbInterface.body()
@@ -41,12 +51,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val data = title.body()
                 Log.d("Title",data.toString())
             }
-            withContext(Dispatchers.Main){
-                progressBar.visibility = View.GONE
-                textView.visibility = View.VISIBLE
-            }
         }
-
-        return view
     }
 }

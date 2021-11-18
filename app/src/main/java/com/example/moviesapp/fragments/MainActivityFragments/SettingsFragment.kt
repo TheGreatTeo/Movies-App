@@ -36,12 +36,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         signOutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             sharedPrefsHandler.clearEmail(requireContext().applicationContext)
-            activityOpener.openActivity(requireContext().applicationContext, LogInActivity::class.java)
+            activityOpener.openActivity(requireActivity(), LogInActivity::class.java)
             requireActivity().finish()
         }
 
         toCoroutine.setOnClickListener {
-            activityOpener.openActivity(requireContext().applicationContext, CoroutinesHomework::class.java)
+            activityOpener.openActivity(requireActivity(), CoroutinesHomework::class.java)
         }
 
         changeLanguage.setOnClickListener {

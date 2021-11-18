@@ -35,7 +35,7 @@ class SignUpFragment : Fragment(R.layout.signup_fragment) {
         val confirmPasswordText: EditText = view.findViewById(R.id.confPassword)
 
         signUpButton.setOnClickListener{
-            authHandler.registerUser(emailText,passwordText,confirmPasswordText)
+            authHandler.registerUser(emailText,passwordText,confirmPasswordText,requireActivity())
         }
 
         return view
