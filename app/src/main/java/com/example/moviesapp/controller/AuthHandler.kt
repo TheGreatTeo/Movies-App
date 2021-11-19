@@ -124,6 +124,7 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
 
     suspend fun userLogIn(emailText: String,passwordText: String,reqActivity: FragmentActivity,progressBar: ProgressBar){
         lifecycleScope.launch(Dispatchers.IO) {
+            auth.signInWithEmailAndPassword(emailText,passwordText)
             auth.signInWithEmailAndPassword(emailText, getMD5(passwordText)).addOnCompleteListener(
                     OnCompleteListener { task ->
                         if (task.isSuccessful) {

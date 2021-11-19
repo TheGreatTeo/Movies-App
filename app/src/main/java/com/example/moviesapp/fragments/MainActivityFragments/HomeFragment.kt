@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
-import com.example.moviesapp.API.imdbAPI.IMDBInterface
 import com.example.moviesapp.API.tmdbAPI.TMDBInterface
 import com.example.moviesapp.R
 import kotlinx.coroutines.Dispatchers
@@ -45,11 +44,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             if(tmdbInterface.isSuccessful){
                 val data = tmdbInterface.body()
                 Log.d("Raspuns",data.toString())
-            }
-            val title = IMDBInterface.create().searchTitle("k_m2duxbz7","Harry Potter").awaitResponse()
-            if(title.isSuccessful){
-                val data = title.body()
-                Log.d("Title",data.toString())
             }
         }
     }

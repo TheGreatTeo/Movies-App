@@ -17,6 +17,7 @@ import com.example.moviesapp.fragments.MovieFragments.MovieDetailsFragment
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 import org.json.JSONArray
 import java.io.IOException
 
@@ -44,11 +45,11 @@ class LibraryFragment : Fragment(R.layout.fragment_library), MovieAdapter.OnItem
                     noContent.visibility = View.INVISIBLE
                     Log.d("Docu",document.id)
                     val jsonObject = readJSON().getJSONArray(document.getLong("genrePos")!!.toInt()).getJSONObject(document.getLong("moviePos")!!.toInt())
-                    val movieItem = MovieItem(jsonObject.getString("imageURL"),jsonObject.getString("title"),jsonObject.getDouble("rating"))
+                    val movieItem = MovieItem("","",Picasso.get().load("https://image.tmdb.org/t/p/w500"),"",jsonObject.getDouble("rating"),"")
                     movieList.add(movieItem)
 
                     recyclerView.adapter = MovieAdapter(movieList,this)
-                    recyclerView.layoutManager = LinearLayoutManager(context!!.applicationContext)
+                    recyclerView.layoutManager = LinearLayoutManager(requireContext().applicationContext)
                     recyclerView.setHasFixedSize(true)
                 }
             }).addOnFailureListener { noContent.visibility = View.VISIBLE }
@@ -61,7 +62,7 @@ class LibraryFragment : Fragment(R.layout.fragment_library), MovieAdapter.OnItem
         var json: String? = null
         var jsonArray: JSONArray = JSONArray()
         try{
-            val inputStream = resources.openRawResource(resources.getIdentifier("movies","raw",context!!.applicationContext.packageName))
+            val inputStream = resources.openRawResource(resources.getIdentifier("movies","raw",requireContext().applicationContext.packageName))
             json = inputStream.bufferedReader().use { it.readText() }
 
             jsonArray = JSONArray(json)
@@ -75,7 +76,7 @@ class LibraryFragment : Fragment(R.layout.fragment_library), MovieAdapter.OnItem
         FirebaseFirestore.getInstance().collection("movieLibrary").whereEqualTo("userID",userID).get().addOnSuccessListener(
             OnSuccessListener { documents ->
                 for(document in documents){
-                    communicator.passMovie(movieDetailsFragment,document.getLong("genrePos")!!.toInt(),document.getLong("moviePos")!!.toInt())
+                    communicator.passMovie(movieDetailsFragment,"","","","",0.0)
                     return@OnSuccessListener
                 }
             })

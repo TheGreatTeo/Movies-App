@@ -36,6 +36,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         signOutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             sharedPrefsHandler.clearEmail(requireContext().applicationContext)
+            sharedPrefsHandler.clearGenresIdName(requireContext().applicationContext)
             activityOpener.openActivity(requireActivity(), LogInActivity::class.java)
             requireActivity().finish()
         }

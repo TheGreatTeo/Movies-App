@@ -38,6 +38,9 @@
     </style>
 
     <style name="splashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:background">@color/gray</item>
+        <item name="colorPrimary">@color/gray</item>
+        <item name="colorPrimaryVariant">@color/gray</item>
         <item name="android:windowBackground">@drawable/splash_image</item>
     </style>
 </resources>
