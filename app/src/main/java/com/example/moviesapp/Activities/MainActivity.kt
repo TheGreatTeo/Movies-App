@@ -11,6 +11,7 @@ import com.example.moviesapp.fragments.MainActivityFragments.HomeFragment
 import com.example.moviesapp.fragments.MainActivityFragments.LibraryFragment
 import com.example.moviesapp.fragments.MainActivityFragments.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.squareup.picasso.RequestCreator
 
 class MainActivity : AppCompatActivity(),Communicator {
 
@@ -50,15 +51,19 @@ class MainActivity : AppCompatActivity(),Communicator {
         }
     }
 
-    override fun passData(fragment: Fragment,data: Int) {
+    override fun passGenre(fragment: Fragment, genreId: Int, genreName: String) {
         val bundle = Bundle()
-        bundle.putInt("genrePosition",data)
+        bundle.putInt("genreId",genreId)
+        bundle.putString("genreName",genreName)
         switchFragment(fragment,bundle)
     }
-    override fun passMovie(fragment: Fragment,genre:Int, movie:Int){
+    override fun passMovie(fragment: Fragment, title: String, description: String, imageURL: String, genre: String, rating: Double){
         val bundle = Bundle()
-        bundle.putInt("genrePosition",genre)
-        bundle.putInt("moviePosition",movie)
+        bundle.putString("title",title)
+        bundle.putString("description",description)
+        bundle.putString("imageURL",imageURL)
+        bundle.putString("genre",genre)
+        bundle.putDouble("rating",rating)
         switchFragment(fragment,bundle)
     }
 
