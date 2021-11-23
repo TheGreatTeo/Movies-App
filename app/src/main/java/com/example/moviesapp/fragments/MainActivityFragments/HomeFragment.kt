@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.API.tmdbAPI.TMDBInterface
 import com.example.moviesapp.API.tmdbAPI.TMDBJSON
 import com.example.moviesapp.R
+import com.example.moviesapp.controller.CheckInternet
 import com.example.moviesapp.controller.ViewPagerAdapter.Adapter
 import com.example.moviesapp.data.MovieItem
 import com.squareup.picasso.Picasso
@@ -25,7 +27,8 @@ import retrofit2.awaitResponse
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     var movieList = ArrayList<MovieItem>()
-    var tmdbJSON = TMDBJSON(0,listOf<com.example.moviesapp.API.tmdbAPI.Result>())
+    var tmdbJSON = TMDBJSON(0,listOf())
+    val checkInternet= CheckInternet()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,12 +39,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         movieList = ArrayList<MovieItem>()
         val adapter: Adapter = Adapter(movieList,this@HomeFragment.requireContext())
         progressBar.visibility = View.VISIBLE
-        lifecycleScope.launch() {
-            getMovies()
-            viewPager.adapter = adapter
-            viewPager.setPadding(100,0,100,0)
-            viewPager.currentItem = movieList.size/2
-            delay(200L)
+        viewPager.visibility = View.GONE
+        if(checkInternet.isOnline(requireContext())) {
+            lifecycleScope.launch() {
+                getMovies()
+                viewPager.adapter = adapter
+                viewPager.setPadding(200, 0, 200, 0)
+                viewPager.currentItem = movieList.size / 2
+                delay(250L)
+                progressBar.visibility = View.GONE
+                viewPager.visibility = View.VISIBLE
+            }
+        }else{
+            Toast.makeText(requireContext(),"No internet connection!", Toast.LENGTH_LONG).show()
             progressBar.visibility = View.GONE
         }
 
@@ -58,6 +68,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     val movieItem = MovieItem(i.title,i.overview, Picasso.get().load("https://image.tmdb.org/t/p/w500" + i.poster_path),"",i.vote_average,i.poster_path)
                     movieList.add(movieItem)
                 }
+            }else{
+                Toast.makeText(requireContext(),"There is something wrong!", Toast.LENGTH_LONG).show()
             }
         }
     }

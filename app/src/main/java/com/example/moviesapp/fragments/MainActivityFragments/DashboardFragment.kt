@@ -1,5 +1,8 @@
 package com.example.moviesapp.fragments.MainActivityFragments
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.example.moviesapp.controller.RecyclerViewAdapters.GenreAdapter
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +19,7 @@ import com.example.moviesapp.API.tmdbAPI.Genre
 import com.example.moviesapp.API.tmdbAPI.GenreJSON
 import com.example.moviesapp.API.tmdbAPI.TMDBInterface
 import com.example.moviesapp.R
+import com.example.moviesapp.controller.CheckInternet
 import com.example.moviesapp.controller.Communicator
 import com.example.moviesapp.controller.SharedPrefsHandler
 import com.example.moviesapp.data.GenreItem
@@ -29,6 +34,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard), GenreAdapter.On
     private val movieFragment = MovieFragment()
     var genres = GenreJSON(listOf<Genre>())
     var genreList = ArrayList<GenreItem>()
+    val checkInternet= CheckInternet()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,31 +49,38 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard), GenreAdapter.On
 
         genreList = ArrayList()
         var genreSet = sharedPrefs.getGenresName(requireActivity())
-        Log.d("genreSet",genreSet.size.toString())
-        if(genreSet.size == 1) {
-            lifecycleScope.launch() {
-                Log.d("GETGenre","GET")
-                getGenres()
-                delay(500L)
-                recyclerView.adapter = GenreAdapter(genreList, this@DashboardFragment)
-                recyclerView.layoutManager = LinearLayoutManager(requireContext().applicationContext)
-                recyclerView.setHasFixedSize(true)
-                progressBar.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
-            }
-        }else{
-            lifecycleScope.launch() {
-                Log.d("GETGenre", "NOGET")
-                for (i in genreSet) {
-                    val genreItem = GenreItem(i, R.drawable.action_crop)
-                    genreList.add(genreItem)
+        if(checkInternet.isOnline(requireContext())) {
+            if (genreSet.size == 1) {
+                lifecycleScope.launch() {
+                    Log.d("GETGenre", "GET")
+                    getGenres()
+                    delay(500L)
                     recyclerView.adapter = GenreAdapter(genreList, this@DashboardFragment)
-                    recyclerView.layoutManager = LinearLayoutManager(requireContext().applicationContext)
+                    recyclerView.layoutManager =
+                        LinearLayoutManager(requireContext().applicationContext)
                     recyclerView.setHasFixedSize(true)
                     progressBar.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
                 }
+            } else {
+                lifecycleScope.launch() {
+                    Log.d("GETGenre", "NOGET")
+                    for (i in genreSet) {
+                        val genreItem = GenreItem(i, R.drawable.action_crop)
+                        genreList.add(genreItem)
+                        recyclerView.adapter = GenreAdapter(genreList, this@DashboardFragment)
+                        recyclerView.layoutManager =
+                            LinearLayoutManager(requireContext().applicationContext)
+                        recyclerView.setHasFixedSize(true)
+                        progressBar.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
+                    }
+                }
             }
+        }else{
+            Toast.makeText(requireContext(),"No internet connection!",Toast.LENGTH_LONG).show()
+            progressBar.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
         }
         return view
     }
