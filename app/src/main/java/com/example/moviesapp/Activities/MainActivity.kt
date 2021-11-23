@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity(),Communicator {
         setTheme(R.style.Theme_New)
         setContentView(R.layout.activity_main)
 
-
         nav= findViewById(R.id.bottomNav)
         switchFragment(homeFragment,null)
 

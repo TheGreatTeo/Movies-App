@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@color/white">
+    android:background="#182C45">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/genreImage"
@@ -27,23 +27,23 @@
         android:text="Action"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/genreImage"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5"
+        android:background="#182C45"/>
 
     <ImageView
         android:id="@+id/arrow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:src="@drawable/right_arrow"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/genre"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"/>
+        app:layout_constraintVertical_bias="0.5"
+        android:background="#182C45"/>
 
 
 
@@ -52,7 +52,6 @@
         android:layout_height="2dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/genreImage"
-        android:background="@color/white"/>
+        app:layout_constraintTop_toBottomOf="@id/genreImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
