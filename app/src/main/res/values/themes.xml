@@ -16,7 +16,7 @@
 
     <style name="Theme.New" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="android:background">@color/backgroud</item>
+        <item name="android:windowBackground">@color/backgroud</item>
         <item name="colorPrimary">@color/buttonColor</item>
         <item name="colorPrimaryVariant">@color/buttonColor</item>
         <item name="colorOnPrimary">@color/black</item>
@@ -30,6 +30,7 @@
         <item name="android:textColorSecondaryInverse">@color/white</item>
         <item name="android:textColorTertiaryInverse">@color/white</item>
         <item name="buttonStyle">@style/Button</item>
+        <item name="android:searchViewStyle">@style/SearchView</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
@@ -48,5 +49,9 @@
         <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryVariant">@color/gray</item>
         <item name="android:windowBackground">@drawable/splash_image</item>
+    </style>
+
+    <style name="SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@drawable/search_view</item>
     </style>
 </resources>

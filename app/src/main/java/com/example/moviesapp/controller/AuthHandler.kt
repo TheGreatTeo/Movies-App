@@ -62,10 +62,11 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
         return result
     }
 
-    fun registerUser(emailText: EditText, passwordText: EditText, confirmPasswordText : EditText,reqActivity: FragmentActivity){
+    fun registerUser(emailText: EditText, passwordText: EditText, confirmPasswordText : EditText,usernameText: EditText,reqActivity: FragmentActivity){
         var email = emailText.text.toString()
         var password = passwordText.text.toString()
         var confirmPassword = confirmPasswordText.text.toString()
+        var username = usernameText.text.toString()
 
         if(!password.equals(confirmPassword)){
             confirmPasswordText.setError("Passwords not matching")
@@ -93,18 +94,23 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
             passwordText.requestFocus()
             return
         }
-
+        if(username.isEmpty()){
+            usernameText.setError("Username is requierd")
+            usernameText.requestFocus()
+            return
+        }
 
         auth.createUserWithEmailAndPassword(email,getMD5(password)).addOnCompleteListener(
             OnCompleteListener { task ->
                 if(task.isSuccessful){
                     val firebaseUser = FirebaseAuth.getInstance().currentUser
-                    val user = User(email,getMD5(password))
+                    val user = User(email,getMD5(password),username)
                     FirebaseFirestore.getInstance().collection("users").add(user).addOnCompleteListener(
                         OnCompleteListener { task ->
                             if(task.isSuccessful){
                                 Toast.makeText(context.applicationContext,"Successfully registered",Toast.LENGTH_SHORT).show()
                                 sharedPrefsHandler.setEmail(context.applicationContext,email)
+                                sharedPrefsHandler.setUsername(context.applicationContext,username)
                                 activityOpener.openActivity(reqActivity, MainActivity::class.java)
                             }
                             else{
