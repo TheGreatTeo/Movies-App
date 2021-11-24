@@ -29,7 +29,10 @@ class MovieAdapter(private val movieList: List<MovieItem>,private val listener: 
         val currentMovie = movieList[position]
         holder.title.text = currentMovie.title
         holder.rating.text = "⭐" + currentMovie.rating.toString()
-        currentMovie.imageResource.into(holder.imageView)
+        if(currentMovie.imageURL != null)
+            currentMovie.imageResource.into(holder.imageView)
+        else
+            holder.imageView.setImageResource(R.drawable.noimage)
 //        GlobalScope.launch(Dispatchers.Main) {
 //            holder.progressBar.visibility = View.VISIBLE
 //            holder.imageView.alpha = 0F

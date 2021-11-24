@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -16,36 +17,63 @@ import com.example.moviesapp.API.tmdbAPI.TMDBInterface
 import com.example.moviesapp.API.tmdbAPI.TMDBJSON
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.CheckInternet
+import com.example.moviesapp.controller.Communicator
+import com.example.moviesapp.controller.SharedPrefsHandler
 import com.example.moviesapp.controller.ViewPagerAdapter.Adapter
 import com.example.moviesapp.data.MovieItem
+import com.google.android.material.imageview.ShapeableImageView
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.w3c.dom.Text
 import retrofit2.awaitResponse
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     var movieList = ArrayList<MovieItem>()
     var tmdbJSON = TMDBJSON(0,listOf())
     val checkInternet= CheckInternet()
+    val sharedPrefs = SharedPrefsHandler()
+    val searchFragment = SearchFragment()
+    private lateinit var communicator: Communicator
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        movieList = ArrayList<MovieItem>()
+        communicator = activity as Communicator
+
+        val usernameText: TextView = view.findViewById(R.id.helloUser)
+        usernameText.text = "Hello " + sharedPrefs.getUsername(requireContext())+"!"
+
+        val searchBar: SearchView = view.findViewById(R.id.searchBar)
+        searchBar.setOnClickListener {
+            communicator.searchView(searchFragment)
+        }
+        searchBar.setOnQueryTextFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+                communicator.searchView(searchFragment)
+            }
+        }
+
+        val userIcon: ShapeableImageView = view.findViewById(R.id.userIcon)
+        userIcon.setImageResource(R.drawable.usericon)
+
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         var viewPager: ViewPager = view.findViewById(R.id.viewPager)
-        movieList = ArrayList<MovieItem>()
         val adapter: Adapter = Adapter(movieList,this@HomeFragment.requireContext())
+
         progressBar.visibility = View.VISIBLE
         viewPager.visibility = View.GONE
+
         if(checkInternet.isOnline(requireContext())) {
             lifecycleScope.launch() {
                 getMovies()
                 viewPager.adapter = adapter
-                viewPager.setPadding(200, 0, 200, 0)
-                viewPager.currentItem = movieList.size / 2
+                viewPager.setPadding(50, 0, 500, 0)
+                viewPager.currentItem = 0
                 delay(250L)
                 progressBar.visibility = View.GONE
                 viewPager.visibility = View.VISIBLE

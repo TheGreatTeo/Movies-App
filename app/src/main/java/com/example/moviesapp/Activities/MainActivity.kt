@@ -66,6 +66,11 @@ class MainActivity : AppCompatActivity(),Communicator {
         switchFragment(fragment,bundle)
     }
 
+    override fun searchView(fragment: Fragment) {
+        val bundle = Bundle()
+        switchFragment(fragment,bundle)
+    }
+
     override fun onBackPressed() {
         val fragments = supportFragmentManager.fragments
         if(fragments.get(fragments.size-1) == dashboardFragment || fragments.get(fragments.size-1) == libraryFragment || fragments.get(fragments.size-1) == settingsFragment) {

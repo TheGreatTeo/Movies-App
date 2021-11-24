@@ -66,7 +66,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
 
     override fun onItemClick(position: Int) {
         val movieItem = movieList.get(position)
-        communicator.passMovie(movieDetailsFragment,movieItem.title,movieItem.description,movieItem.imageURL,movieItem.genre,movieItem.rating)
+        //communicator.passMovie(movieDetailsFragment,movieItem.title,movieItem.description,movieItem.imageURL,movieItem.genre,movieItem.rating)
     }
 
     suspend fun getMovies() {

@@ -13,4 +13,5 @@
     <string name="library">Librarie</string>
     <string name="settings">Setari</string>
     <string name="changeLanguageTitle">Alege limba</string>
+    <string name="username">Nume utilizator</string>
 </resources>

@@ -17,6 +17,9 @@ interface TMDBInterface {
     @GET("/3/movie/popular")
     fun getPopular(@Query("api_key") api_key: String): Call<TMDBJSON>
 
+    @GET("/3/search/movie")
+    fun searchMovie(@Query("api_key") api_key: String, @Query("query") query: String): Call<TMDBJSON>
+
     companion object{
         var BASE_URL = "https://api.themoviedb.org"
 
