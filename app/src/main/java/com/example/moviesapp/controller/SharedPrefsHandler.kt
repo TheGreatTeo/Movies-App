@@ -8,6 +8,7 @@ import com.example.moviesapp.API.tmdbAPI.Genre
 open class SharedPrefsHandler {
 
     val PREF_EMAIL = "email"
+    val PREF_USERNAME = "username"
     val PREF_LANGUAGE = "language"
     val PREF_GENRESID = "genresId"
     val PREF_GENRESNAME = "genresName"
@@ -28,6 +29,21 @@ open class SharedPrefsHandler {
     open fun clearEmail(ctx: Context){
         val editor = getSharedPrefs(ctx).edit()
         editor.remove(PREF_EMAIL)
+        editor.commit()
+    }
+
+    open fun setUsername(ctx: Context, username: String){
+        val editor = getSharedPrefs(ctx).edit()
+        editor.putString(PREF_USERNAME,username)
+        editor.commit()
+    }
+    open fun getUsername(ctx: Context): String{
+        return getSharedPrefs(ctx).getString(PREF_USERNAME,"").toString()
+    }
+
+    open fun clearUsername(ctx: Context){
+        val editor = getSharedPrefs(ctx).edit()
+        editor.remove(PREF_USERNAME)
         editor.commit()
     }
 
