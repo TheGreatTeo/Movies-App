@@ -1,5 +1,6 @@
 package com.example.moviesapp.fragments.MainActivityFragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
@@ -63,20 +65,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         var viewPager: ViewPager = view.findViewById(R.id.viewPager)
+        val viewPagerLatest: ViewPager = view.findViewById(R.id.viewPagerLatest)
         val adapter: Adapter = Adapter(movieList,this@HomeFragment.requireContext())
+        val nestedScrollView: NestedScrollView = view.findViewById(R.id.scrollView)
+
 
         progressBar.visibility = View.VISIBLE
-        viewPager.visibility = View.GONE
+        nestedScrollView.visibility = View.GONE
 
         if(checkInternet.isOnline(requireContext())) {
             lifecycleScope.launch() {
                 getMovies()
                 viewPager.adapter = adapter
-                viewPager.setPadding(50, 0, 500, 0)
+                viewPagerLatest.adapter = adapter
+                if(requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    viewPager.setPadding(0, 0, 400, 0)
+                    viewPagerLatest.setPadding(0, 0, 400, 0)
+                }else {
+                    viewPager.setPadding(0, 0, 1500, 0)
+                    viewPagerLatest.setPadding(0, 0, 1500, 0)
+                }
                 viewPager.currentItem = 0
+                viewPagerLatest.currentItem = 0
                 delay(250L)
                 progressBar.visibility = View.GONE
-                viewPager.visibility = View.VISIBLE
+                nestedScrollView.visibility = View.VISIBLE
             }
         }else{
             Toast.makeText(requireContext(),"No internet connection!", Toast.LENGTH_LONG).show()

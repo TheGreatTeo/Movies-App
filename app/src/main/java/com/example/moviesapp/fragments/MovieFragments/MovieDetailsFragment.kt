@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager.widget.ViewPager
 import com.example.moviesapp.R
 import com.example.moviesapp.data.MovieLibrary
 import com.google.android.gms.tasks.OnCompleteListener
@@ -41,7 +42,9 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         val view = inflater.inflate(R.layout.fragment_movie_details, container, false)
         val title: TextView = view.findViewById(R.id.title)
         val rating: TextView = view.findViewById(R.id.rating)
-        val description: TextView = view.findViewById(R.id.description)
+        val description: TextView = view.findViewById(R.id.synopsis)
+        val genreList: ViewPager = view.findViewById(R.id.genreList)
+        val castList: ViewPager = view.findViewById(R.id.castList)
         val image: ImageView = view.findViewById(R.id.image)
         var addToWatchList: Button = view.findViewById(R.id.addToWatchList)
 
@@ -52,8 +55,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         ratingText = arguments?.getDouble("rating")!!
 
         title.text = titleText
-        rating.text = "⭐"+ratingText
-        description.text = descriptionText
+        rating.text = "Director: " + "| ⭐ " + ratingText
+        description.text = descriptionText + descriptionText + descriptionText
         Picasso.get().load("https://image.tmdb.org/t/p/w500"+imageURL).into(image)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
