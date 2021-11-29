@@ -101,7 +101,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnItemCl
                 tmdbJSON = movies.body()!!
                 Log.d("SearchedMovies", tmdbJSON.toString())
                 for (i in tmdbJSON.results) {
-                    val movieItem = MovieItem(i.title,i.overview,Picasso.get().load("https://image.tmdb.org/t/p/w500" + i.poster_path),"",i.vote_average,i.poster_path)
+                    val movieItem = MovieItem(i.id,i.title,i.overview,i.poster_path,i.vote_average,i.poster_path)
                     movieList.add(movieItem)
                 }
             }
