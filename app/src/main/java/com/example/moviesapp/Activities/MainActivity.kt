@@ -56,13 +56,9 @@ class MainActivity : AppCompatActivity(),Communicator {
         bundle.putString("genreName",genreName)
         switchFragment(fragment,bundle)
     }
-    override fun passMovie(fragment: Fragment, title: String, description: String, imageURL: String, genre: String, rating: Double){
+    override fun passMovie(fragment: Fragment, id: Int){
         val bundle = Bundle()
-        bundle.putString("title",title)
-        bundle.putString("description",description)
-        bundle.putString("imageURL",imageURL)
-        bundle.putString("genre",genre)
-        bundle.putDouble("rating",rating)
+        bundle.putInt("id",id)
         switchFragment(fragment,bundle)
     }
 
