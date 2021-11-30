@@ -12,20 +12,17 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.moviesapp.Activities.LogInActivity
-import com.example.moviesapp.Activities.MainActivity
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.ActivityOpener
 import com.example.moviesapp.controller.AuthHandler
 import com.example.moviesapp.controller.SharedPrefsHandler
-import com.example.moviesapp.controller.callback
+import com.example.moviesapp.controller.Callback
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LogInFragment : Fragment(R.layout.login_fragment) {
 
-    var callbackFragment:callback? = null
+    var callbackFragment:Callback? = null
     val sharedPrefsHandler = SharedPrefsHandler()
     val activityOpener = ActivityOpener()
     private var email: EditText? = null
@@ -78,7 +75,7 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
         return view
     }
 
-    fun getCallbackFragment(callbackFragment: callback){
+    fun getCallbackFragment(callbackFragment: Callback){
         this.callbackFragment = callbackFragment
     }
 

@@ -106,7 +106,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 tmdbJSON = movies.body()!!
                 Log.d("Popular", tmdbJSON.toString())
                 for (i in tmdbJSON.results) {
-                    val movieItem = MovieItem(i.id,i.title,i.overview, i.poster_path,i.vote_average,i.poster_path)
+                    val movieItem = MovieItem(i.id,i.title,i.overview, i.poster_path,i.vote_average)
                     movieList.add(movieItem)
                 }
             }else{
