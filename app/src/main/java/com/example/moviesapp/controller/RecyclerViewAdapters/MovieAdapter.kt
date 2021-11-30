@@ -28,7 +28,7 @@ class MovieAdapter(private val movieList: List<MovieItem>,private val listener: 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentMovie = movieList[position]
         holder.title.text = currentMovie.title
-        holder.rating.text = "⭐" + currentMovie.rating.toString()
+        holder.rating.text = currentMovie.rating.toString() + " ⭐ "
         Picasso.get().load("https://image.tmdb.org/t/p/w500" + currentMovie.imageResource).into(holder.imageView)
 //        GlobalScope.launch(Dispatchers.Main) {
 //            holder.progressBar.visibility = View.VISIBLE

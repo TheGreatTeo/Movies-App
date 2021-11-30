@@ -19,7 +19,9 @@ import com.example.moviesapp.API.tmdbAPI.TMDBInterface
 import com.example.moviesapp.API.tmdbAPI.TMDBJSON
 import com.example.moviesapp.R
 import com.example.moviesapp.RoomDB.*
+import com.example.moviesapp.controller.Callback
 import com.example.moviesapp.controller.Communicator
+import com.example.moviesapp.controller.GoBack
 import com.example.moviesapp.controller.RecyclerViewAdapters.MovieAdapter
 import com.example.moviesapp.controller.RecyclerViewAdapters.MovieListAdapter
 import com.example.moviesapp.data.GenreItem
@@ -34,8 +36,10 @@ import org.json.JSONArray
 import retrofit2.awaitResponse
 import java.io.IOException
 
-class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClickListener, MovieListAdapter.OnItemClickListener {
+class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClickListener, MovieListAdapter.OnItemClickListener,
+    GoBack,Callback {
 
+    var callbackFragment:Callback? = null
     private lateinit var communicator: Communicator
     var genreId: Int = -1
     var genreName: String = ""
@@ -56,9 +60,10 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
         movieList = ArrayList<MovieItem>()
         genreId = arguments?.getInt("genreId")!!
         genreName = arguments?.getString("genreName")!!
+        movieDetailsFragment.getCallbackFragment(this)
 
         var recyclerView: RecyclerView = view.findViewById(R.id.movieList)
-        var adapter = MovieListAdapter(this@MovieFragment)
+        var adapter = MovieListAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -74,6 +79,15 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
         val movieItem = movieList.get(position)
         communicator.passMovie(movieDetailsFragment,movieItem.id)
     }
+
+    override fun goBack() {
+        changeFragment()
+    }
+
+    override fun changeFragment() {
+        callbackFragment!!.changeFragment()
+    }
+
 
 /*    suspend fun getMovies() {
         return withContext(Dispatchers.IO) {

@@ -20,7 +20,15 @@ class MovieRepository(private val movieDao: MovieDao) {
     fun getMovieById(id: Int): MovieAndGenre {
         return movieDao.getMovieById(id)
     }
-
+    fun addMovieToLibrary(movieId: Int){
+        return movieDao.addMovieToLibrary(movieId)
+    }
+    fun removeFromLibrary(movieId: Int){
+        return movieDao.removeFromLibrary(movieId)
+    }
+    fun getAddedMovies(): Flow<List<MovieItem>>{
+        return movieDao.getAddedMovies()
+    }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

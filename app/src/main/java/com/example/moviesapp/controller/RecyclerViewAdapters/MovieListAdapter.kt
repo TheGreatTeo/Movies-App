@@ -44,6 +44,7 @@ class MovieListAdapter(private val listener: OnItemClickListener) : ListAdapter<
 
         fun bind(movieItem: MovieItem){
             title.text = movieItem.title
+            rating.text = movieItem.rating.toString() + " ⭐ "
             Picasso.get().load("https://image.tmdb.org/t/p/w500" + movieItem.imageResource).into(imageView)
         }
 

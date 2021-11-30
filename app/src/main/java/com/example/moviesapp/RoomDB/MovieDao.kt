@@ -19,6 +19,14 @@ interface MovieDao {
     @Query("SELECT * FROM movie_table")
     fun getAllMoviesWithGenres(): Flow<List<MovieAndGenre>>
 
+    @Query("UPDATE movie_table SET added=1 WHERE id=:movieId AND added=0")
+    fun addMovieToLibrary(movieId: Int)
+
+    @Query("UPDATE movie_table SET added=0 WHERE id=:movieId AND added=1")
+    fun removeFromLibrary(movieId: Int)
+
+    @Query("SELECT * FROM movie_table WHERE added=1")
+    fun getAddedMovies(): Flow<List<MovieItem>>
 
     @Query("SELECT * FROM movie_table,Genre WHERE id=movieId AND genreId =:genre ORDER BY id ASC")
     fun getMoviesByGenre(genre: Int): Flow<List<MovieItem>>

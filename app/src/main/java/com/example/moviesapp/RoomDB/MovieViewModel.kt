@@ -16,7 +16,14 @@ class MovieViewModel(private val repository: MovieRepository): ViewModel() {
     val allMovies: LiveData<List<MovieItem>> = repository.allMovies.asLiveData()
 
     fun getMovieByGenre(genre: Int) = repository.getMoviesByGenre(genre).asLiveData()
+
     fun getMovieById(id: Int) = repository.getMovieById(id)
+
+    fun addMovieToLibrary(movieId: Int) = repository.addMovieToLibrary(movieId)
+
+    fun removeFromLibrary(movieId: Int) = repository.removeFromLibrary(movieId)
+
+    val addedMovies = repository.getAddedMovies().asLiveData()
 
     fun insertMovie(movieItem: MovieItem) = viewModelScope.launch(Dispatchers.IO) {
         repository.insertMovie(movieItem)
