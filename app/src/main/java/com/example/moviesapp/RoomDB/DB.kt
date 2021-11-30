@@ -35,24 +35,35 @@ open abstract class DB:RoomDatabase() {
             }
         }
         suspend fun populateDatabase(movieDao: MovieDao) {
-            val movies = TMDBInterface.create().getTopRatedMovies("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
             val genres = TMDBInterface.create().getGenres("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
-            if (movies.isSuccessful) {
-                tmdbJSON = movies.body()!!
-                Log.d("Genres", tmdbJSON.toString())
-                for (i in tmdbJSON.results) {
-                    val movieItem = MovieItem(i.id,i.title,i.overview,i.poster_path,i.vote_average,i.poster_path)
-                    for(j in i.genre_ids){
-                        if(genres.isSuccessful){
-                            genreJSON = genres.body()!!
-                            for(genre in genreJSON.genres)
-                                if(genre.id == j) {
-                                    val genre = Genre(0, i.id, j,genre.name)
-                                    movieDao.insertGenre(genre)
-                                }
+            for(i in 1..469) {
+                val movies =
+                    TMDBInterface.create().getTopRatedMovies("9df4f48f58d1cb4702a2b4d936029e0d",i.toString())
+                        .awaitResponse()
+
+                if (movies.isSuccessful) {
+                    tmdbJSON = movies.body()!!
+                    Log.d("Genres", tmdbJSON.toString())
+                    for (i in tmdbJSON.results) {
+                        val movieItem = MovieItem(
+                            i.id,
+                            i.title,
+                            i.overview,
+                            i.poster_path,
+                            i.vote_average
+                        )
+                        for (j in i.genre_ids) {
+                            if (genres.isSuccessful) {
+                                genreJSON = genres.body()!!
+                                for (genre in genreJSON.genres)
+                                    if (genre.id == j) {
+                                        val genre = Genre(0, i.id, j, genre.name)
+                                        movieDao.insertGenre(genre)
+                                    }
+                            }
                         }
+                        movieDao.insertMovie(movieItem)
                     }
-                    movieDao.insertMovie(movieItem)
                 }
             }
         }
