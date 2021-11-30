@@ -1,8 +1,5 @@
 package com.example.moviesapp.fragments.MovieFragments
 
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,28 +10,43 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
+import com.example.moviesapp.API.tmdbAPI.*
 import com.example.moviesapp.R
-import com.example.moviesapp.data.MovieLibrary
+import com.example.moviesapp.RoomDB.MovieViewModel
+import com.example.moviesapp.RoomDB.MovieViewModelFactory
+import com.example.moviesapp.RoomDB.MoviesApplication
+import com.example.moviesapp.controller.SharedPrefsHandler
+import com.example.moviesapp.controller.ViewPagerAdapter.CastAdapter
+import com.example.moviesapp.controller.ViewPagerAdapter.MovieGenreAdapter
+import com.example.moviesapp.controller.Callback
+import com.example.moviesapp.controller.GoBack
+import com.example.moviesapp.data.*
+import com.example.moviesapp.data.Cast
+import com.example.moviesapp.data.Genre
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
-import org.json.JSONArray
-import java.io.IOException
+import retrofit2.awaitResponse
 
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
-    var titleText = ""
-    var descriptionText = ""
-    var imageURL = ""
-    var genreText = ""
-    var ratingText = 0.0
+    var movieId = -1
+    var callback: Callback? = null
     var added: Boolean = false
-
+    var creditsJSON = CreditsJSON(listOf(),listOf(),0)
+    var cast: Cast = Cast("",arrayListOf<CastMember>())
+    val sharedPrefs = SharedPrefsHandler()
+    var goBack: GoBack? = null
+    private val viewModel: MovieViewModel by viewModels {
+        MovieViewModelFactory((requireActivity().application as MoviesApplication).repository)
+    }
+    lateinit var movieAndGenre: MovieAndGenre
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,51 +58,110 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         val genreList: ViewPager = view.findViewById(R.id.genreList)
         val castList: ViewPager = view.findViewById(R.id.castList)
         val image: ImageView = view.findViewById(R.id.image)
+        val backArrow: ImageView = view.findViewById(R.id.backArrow)
+        val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
+        val nestedScrollView: NestedScrollView = view.findViewById(R.id.scrollView)
         var addToWatchList: Button = view.findViewById(R.id.addToWatchList)
+        var genreItems = arrayListOf<Genre>()
 
-        titleText = arguments?.getString("title")!!
-        descriptionText = arguments?.getString("description")!!
-        imageURL = arguments?.getString("imageURL")!!
-        genreText = arguments?.getString("genre")!!
-        ratingText = arguments?.getDouble("rating")!!
+        progressBar.visibility = View.VISIBLE
+        nestedScrollView.visibility = View.GONE
+        movieId = arguments?.getInt("id")!!
+        Log.d("MovieId",movieId.toString())
+        lifecycleScope.launch() {
+            checkMovie()
+            movieDetails(movieId.toString())
+            title.text = movieAndGenre.movieItem.title
+            rating.text = movieAndGenre.movieItem.rating.toString()
+            description.text = movieAndGenre.movieItem.description
 
-        title.text = titleText
-        rating.text = "Director: " + "| ⭐ " + ratingText
-        description.text = descriptionText + descriptionText + descriptionText
-        Picasso.get().load("https://image.tmdb.org/t/p/w500"+imageURL).into(image)
+            for(genres in movieAndGenre.genreIds){
+                Log.d("GNR",genres.toString())
+                genreItems.add(Genre(-1,-1,genres.genreId,genres.genreName))
+            }
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val userID = currentUser?.uid
+            val genreAdapter = MovieGenreAdapter(genreItems,requireContext().applicationContext)
+            genreList.adapter = genreAdapter
+            genreList.setPadding(0,0,600,0)
+            genreList.currentItem = 0
+            Picasso.get().load("https://image.tmdb.org/t/p/w500"+movieAndGenre.movieItem.imageResource).error(R.drawable.noimage).into(image)
+            rating.text = "Director: " + cast!!.director + "  |  " +rating.text + " ⭐ "
+
+            val castAdapter = CastAdapter(cast!!.cast,requireContext().applicationContext)
+            castList.adapter = castAdapter
+            castList.setPadding(0,0,610,0)
+
+            if(added){
+                addToWatchList.setBackgroundColor(resources.getColor(R.color.black))
+                addToWatchList.text = "ADDED"
+            }
+
+            progressBar.visibility = View.GONE
+            nestedScrollView.visibility = View.VISIBLE
+        }
+
         addToWatchList.setOnClickListener {
-            Log.d("ADDED3",added.toString())
-            if(!added) {
-                lifecycleScope.launch() {
-                    //addMovie(movieLibrary)
-                    addToWatchList.setBackgroundColor(addToWatchList.context.resources.getColor(R.color.red))
+            Log.d("ADDED3", added.toString())
+            lifecycleScope.launch() {
+                if (!added) {
+                    addToWatchList.setBackgroundColor(resources.getColor(R.color.black))
                     addToWatchList.text = "ADDED"
+                    GlobalScope.async(Dispatchers.IO) {
+                        viewModel.addMovieToLibrary(movieId)
+                        added = true
+                    }.await()
+                } else {
+                    addToWatchList.setBackgroundColor(resources.getColor(R.color.buttonColor))
+                    addToWatchList.text = "ADD TO WATCHLIST"
+                    GlobalScope.async(Dispatchers.IO) {
+                        viewModel.removeFromLibrary(movieId)
+                        added = false
+                    }.await()
                 }
             }
         }
 
+        backArrow.setOnClickListener {
+            Log.d("Salut","SAL")
+            goBack?.goBack()
+        }
 
         return view
     }
 
-    suspend fun addMovie(movieLibrary: MovieLibrary){
-        return withContext(Dispatchers.IO){
-            FirebaseFirestore.getInstance().collection("movieLibrary").add(movieLibrary)
-                .addOnCompleteListener(
-                    OnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            added = true
-                        }
-                    })
-        }
+    suspend fun checkMovie(){
+        val job = GlobalScope.async(Dispatchers.IO){
+            added = viewModel.getMovieById(movieId).movieItem.added
+        }.await()
     }
 
-    suspend fun checkMovie(userID: String){
+    suspend fun movieDetails(movieID: String){
         return withContext(Dispatchers.IO){
-
+            movieAndGenre = viewModel.getMovieById(movieID.toInt())
+            Log.d("MovieAndGenre",movieAndGenre.toString()+" ID:"+ movieID)
+            Log.d("movieID",movieID)
+            val movies = TMDBInterface.create().getCredits(movieID,"9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
+            if (movies.isSuccessful) {
+                creditsJSON = movies.body()!!
+                Log.d("Cast", creditsJSON.toString())
+                var castMembers = arrayListOf<CastMember>()
+                for (i in creditsJSON.cast) {
+                    if(i.known_for_department == "Acting"){
+                        castMembers.add(CastMember(i.name,i.character,i.profile_path))
+                    }
+                }
+                for(i in creditsJSON.crew){
+                    if(i.job == "Director")
+                        Log.d("JOB",i.name)
+                        cast.director = i.name
+                }
+                cast.cast = castMembers
+            }else{
+                Log.d("Error Body",movies.message())
+            }
         }
+    }
+    fun getCallbackFragment(callbackFragment: Callback){
+        this.callback = callbackFragment
     }
 }

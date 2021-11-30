@@ -44,7 +44,8 @@ class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnItemCl
     var genreId: Int = -1
     var sharedPrefs = SharedPrefsHandler()
     val movieDetailsFragment = MovieDetailsFragment()
-    var movieList = ArrayList<MovieItem>()
+    var movieList = arrayListOf<MovieItem>()
+    var movieListSaved = arrayListOf<MovieItem>()
     var tmdbJSON = TMDBJSON(0,listOf())
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +67,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnItemCl
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                movieList = ArrayList<MovieItem>()
+                movieList = arrayListOf<MovieItem>()
 
                 lifecycleScope.launch(){
                     if(movieList.isEmpty())
@@ -89,9 +90,9 @@ class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnItemCl
     }
 
     override fun onItemClick(position: Int) {
-        val genresId = sharedPrefs.getGenresId(requireActivity())
-        val genresName = sharedPrefs.getGenresName(requireActivity())
-        communicator.passGenre(movieDetailsFragment, genresId.get(position).toInt(),genresName.get(position))
+        val movieItem = movieListSaved.get(position)
+        Log.d("movieItem",movieItem.id.toString())
+        communicator.passMovie(movieDetailsFragment,movieItem.id)
     }
 
     suspend fun searchMovie(query: String) {
@@ -101,9 +102,18 @@ class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnItemCl
                 tmdbJSON = movies.body()!!
                 Log.d("SearchedMovies", tmdbJSON.toString())
                 for (i in tmdbJSON.results) {
-                    val movieItem = MovieItem(i.title,i.overview,Picasso.get().load("https://image.tmdb.org/t/p/w500" + i.poster_path),"",i.vote_average,i.poster_path)
-                    movieList.add(movieItem)
+                    if(i.vote_average != 0.0) {
+                        val movieItem = MovieItem(
+                            i.id,
+                            i.title,
+                            i.overview,
+                            i.poster_path,
+                            i.vote_average
+                        )
+                        movieList.add(movieItem)
+                    }
                 }
+                movieListSaved = movieList
             }
         }
     }

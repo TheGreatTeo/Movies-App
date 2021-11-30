@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.moviesapp.controller.callback
+import com.example.moviesapp.controller.Callback
 import com.example.moviesapp.fragments.LogInActivityFragments.LogInFragment
 import com.example.moviesapp.fragments.LogInActivityFragments.SignUpFragment
 import android.content.Intent
@@ -14,19 +14,16 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.ActivityOpener
-import com.example.moviesapp.controller.AuthHandler
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 
-class LogInActivity : AppCompatActivity(), callback {
+class LogInActivity : AppCompatActivity(), Callback {
 
     var signUpFragment = SignUpFragment()
     var logInFragment = LogInFragment()

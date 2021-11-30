@@ -1,19 +1,19 @@
 package com.example.moviesapp.Activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.Communicator
+import com.example.moviesapp.controller.Callback
+import com.example.moviesapp.controller.GoBack
 import com.example.moviesapp.fragments.MainActivityFragments.DashboardFragment
 import com.example.moviesapp.fragments.MainActivityFragments.HomeFragment
 import com.example.moviesapp.fragments.MainActivityFragments.LibraryFragment
 import com.example.moviesapp.fragments.MainActivityFragments.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.squareup.picasso.RequestCreator
 
-class MainActivity : AppCompatActivity(),Communicator {
+class MainActivity : AppCompatActivity(),Communicator,Callback {
 
     val homeFragment = HomeFragment()
     val dashboardFragment = DashboardFragment()
@@ -56,13 +56,9 @@ class MainActivity : AppCompatActivity(),Communicator {
         bundle.putString("genreName",genreName)
         switchFragment(fragment,bundle)
     }
-    override fun passMovie(fragment: Fragment, title: String, description: String, imageURL: String, genre: String, rating: Double){
+    override fun passMovie(fragment: Fragment, id: Int){
         val bundle = Bundle()
-        bundle.putString("title",title)
-        bundle.putString("description",description)
-        bundle.putString("imageURL",imageURL)
-        bundle.putString("genre",genre)
-        bundle.putDouble("rating",rating)
+        bundle.putInt("id",id)
         switchFragment(fragment,bundle)
     }
 
@@ -85,5 +81,13 @@ class MainActivity : AppCompatActivity(),Communicator {
         else
             supportFragmentManager.popBackStack()
 
+    }
+
+    override fun changeFragment() {
+        supportFragmentManager.popBackStack()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
     }
 }

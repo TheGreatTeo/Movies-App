@@ -5,6 +5,6 @@ import com.squareup.picasso.RequestCreator
 
 interface Communicator {
     fun passGenre(fragment: Fragment, genreId: Int, genreName: String)
-    fun passMovie(fragment: Fragment, title: String, description: String, imageURL: String, genre: String, rating: Double)
+    fun passMovie(fragment: Fragment, id: Int)
     fun searchView(fragment: Fragment)
 }

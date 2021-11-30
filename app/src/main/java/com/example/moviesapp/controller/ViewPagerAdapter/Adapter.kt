@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.moviesapp.R
 import com.example.moviesapp.data.MovieItem
+import com.squareup.picasso.Picasso
 
 class Adapter(movieList: List<MovieItem>, context: Context): PagerAdapter() {
 
@@ -29,12 +30,16 @@ class Adapter(movieList: List<MovieItem>, context: Context): PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val layoutInflater = LayoutInflater.from(context)
-        val view = layoutInflater.inflate(R.layout.view_pager_item,container,false)
+        val view = layoutInflater.inflate(R.layout.view_pager_item_movies,container,false)
+        val currentMovie = movieList.get(position)
 
         val imageView: ImageView = view.findViewById(R.id.image)
         val title: TextView = view.findViewById(R.id.title)
-        movieList.get(position).imageResource.into(imageView)
-        title.setText(movieList.get(position).title)
+        //val rating: TextView = view.findViewById(R.id.rating)
+
+        Picasso.get().load("https://image.tmdb.org/t/p/w500" + currentMovie.imageResource).into(imageView)
+        title.setText(currentMovie.title)
+        //rating.text = "" + currentMovie.rating + " ⭐ "
 
         view.setOnClickListener {
             Log.d("Item",it.toString())
