@@ -2,13 +2,9 @@ package com.example.moviesapp.RoomDB
 
 import androidx.annotation.WorkerThread
 import com.example.moviesapp.data.Genre
-import com.example.moviesapp.data.Movie
 import com.example.moviesapp.data.MovieAndGenre
 import com.example.moviesapp.data.MovieItem
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
 
 class MovieRepository(private val movieDao: MovieDao) {
 

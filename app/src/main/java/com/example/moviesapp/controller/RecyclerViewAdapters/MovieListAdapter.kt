@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
-import com.example.moviesapp.RoomDB.MovieViewModel
-import com.example.moviesapp.data.Movie
 import com.example.moviesapp.data.MovieItem
 import com.squareup.picasso.Picasso
 

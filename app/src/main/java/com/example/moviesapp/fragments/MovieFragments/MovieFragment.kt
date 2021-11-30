@@ -1,21 +1,15 @@
 package com.example.moviesapp.fragments.MovieFragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.API.tmdbAPI.Result
-import com.example.moviesapp.API.tmdbAPI.TMDBInterface
 import com.example.moviesapp.API.tmdbAPI.TMDBJSON
 import com.example.moviesapp.R
 import com.example.moviesapp.RoomDB.*
@@ -24,17 +18,7 @@ import com.example.moviesapp.controller.Communicator
 import com.example.moviesapp.controller.GoBack
 import com.example.moviesapp.controller.RecyclerViewAdapters.MovieAdapter
 import com.example.moviesapp.controller.RecyclerViewAdapters.MovieListAdapter
-import com.example.moviesapp.data.GenreItem
-import com.example.moviesapp.data.Movie
 import com.example.moviesapp.data.MovieItem
-import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import retrofit2.awaitResponse
-import java.io.IOException
 
 class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClickListener, MovieListAdapter.OnItemClickListener,
     GoBack,Callback {
