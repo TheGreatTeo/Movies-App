@@ -21,7 +21,7 @@ import com.example.moviesapp.fragments.MovieFragments.MovieDetailsFragment
 class LibraryFragment : Fragment(R.layout.fragment_library), MovieListAdapter.OnItemClickListener {
     private lateinit var communicator: Communicator
     var position: Int = -1
-    var movieList = ArrayList<MovieItem>()
+    var movieList = listOf<MovieItem>()
     var movieDetailsFragment = MovieDetailsFragment()
     private val viewModel: MovieViewModel by viewModels {
         MovieViewModelFactory((requireActivity().application as MoviesApplication).repository)
@@ -31,18 +31,22 @@ class LibraryFragment : Fragment(R.layout.fragment_library), MovieListAdapter.On
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_library, container, false)
-
+        var noContent: TextView = view.findViewById(R.id.noContent)
         communicator = activity as Communicator
-        movieList = ArrayList<MovieItem>()
+        movieList = listOf()
         var recyclerView: RecyclerView = view.findViewById(R.id.movieLibraryList)
         val adapter = MovieListAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.addedMovies.observe(viewLifecycleOwner){ movies ->
+            if(!movies.isEmpty())
+                noContent.visibility = View.GONE
+            else
+                noContent.visibility = View.VISIBLE
             adapter.setMovies(movies)
+            movieList = movies
         }
-        var noContent: TextView = view.findViewById(R.id.noContent)
 
 
 
@@ -51,5 +55,7 @@ class LibraryFragment : Fragment(R.layout.fragment_library), MovieListAdapter.On
 
 
     override fun onItemClick(position: Int) {
+        val movieItem = movieList.get(position)
+        communicator.passMovie(movieDetailsFragment,movieItem.id)
     }
 }

@@ -28,6 +28,7 @@ class MovieViewModel(private val repository: MovieRepository): ViewModel() {
     fun insertGenre(genre: Genre) = viewModelScope.launch(Dispatchers.IO) {
         repository.insertGenre(genre)
     }
+    fun movieExists(movieId: Int) = repository.movieExists(movieId)
 }
 
 class MovieViewModelFactory(private val repository: MovieRepository) : ViewModelProvider.Factory {

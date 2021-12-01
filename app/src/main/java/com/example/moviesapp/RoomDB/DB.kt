@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
 @Database(entities = arrayOf(MovieItem::class,Genre::class), version = 1, exportSchema = false)
-@TypeConverters(value = arrayOf(ListConvertor::class))
 open abstract class DB:RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
@@ -36,7 +35,7 @@ open abstract class DB:RoomDatabase() {
         }
         suspend fun populateDatabase(movieDao: MovieDao) {
             val genres = TMDBInterface.create().getGenres("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
-            for(i in 1..469) {
+            for(i in 1..2) {
                 val movies =
                     TMDBInterface.create().getTopRatedMovies("9df4f48f58d1cb4702a2b4d936029e0d",i.toString())
                         .awaitResponse()

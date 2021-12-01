@@ -33,7 +33,8 @@ import org.w3c.dom.Text
 import retrofit2.awaitResponse
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
-    var movieList = ArrayList<MovieItem>()
+    var popularMovies = ArrayList<MovieItem>()
+    var topMovies = ArrayList<MovieItem>()
     var tmdbJSON = TMDBJSON(0,listOf())
     val checkInternet= CheckInternet()
     val sharedPrefs = SharedPrefsHandler()
@@ -44,7 +45,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        movieList = ArrayList<MovieItem>()
+        popularMovies = ArrayList()
+        topMovies = ArrayList()
         communicator = activity as Communicator
 
         val usernameText: TextView = view.findViewById(R.id.helloUser)
@@ -64,9 +66,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         userIcon.setImageResource(R.drawable.usericon)
 
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
-        var viewPager: ViewPager = view.findViewById(R.id.viewPager)
-        val viewPagerLatest: ViewPager = view.findViewById(R.id.viewPagerLatest)
-        val adapter: Adapter = Adapter(movieList,this@HomeFragment.requireContext())
+        var viewPagerPopular: ViewPager = view.findViewById(R.id.viewPagerPopular)
+        val viewPagerTop: ViewPager = view.findViewById(R.id.viewPagerTop)
+        val adapterPopular = Adapter(popularMovies,this@HomeFragment.requireContext())
+        val adapterTop = Adapter(topMovies,this@HomeFragment.requireContext())
         val nestedScrollView: NestedScrollView = view.findViewById(R.id.scrollView)
 
 
@@ -76,17 +79,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         if(checkInternet.isOnline(requireContext())) {
             lifecycleScope.launch() {
                 getMovies()
-                viewPager.adapter = adapter
-                viewPagerLatest.adapter = adapter
+                getLatest()
+                viewPagerPopular.adapter = adapterPopular
+                viewPagerTop.adapter = adapterTop
                 if(requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    viewPager.setPadding(0, 0, 400, 0)
-                    viewPagerLatest.setPadding(0, 0, 400, 0)
+                    viewPagerPopular.setPadding(0, 0, 400, 0)
+                    viewPagerTop.setPadding(0, 0, 400, 0)
                 }else {
-                    viewPager.setPadding(0, 0, 1500, 0)
-                    viewPagerLatest.setPadding(0, 0, 1500, 0)
+                    viewPagerPopular.setPadding(0, 0, 1500, 0)
+                    viewPagerTop.setPadding(0, 0, 1500, 0)
                 }
-                viewPager.currentItem = 0
-                viewPagerLatest.currentItem = 0
+                viewPagerPopular.currentItem = 0
+                viewPagerTop.currentItem = 0
                 delay(250L)
                 progressBar.visibility = View.GONE
                 nestedScrollView.visibility = View.VISIBLE
@@ -101,16 +105,34 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     suspend fun getMovies() {
         return withContext(Dispatchers.IO) {
-            val movies = TMDBInterface.create().getPopular("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
-            if (movies.isSuccessful) {
-                tmdbJSON = movies.body()!!
+            val popular = TMDBInterface.create().getPopular("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
+            if (popular.isSuccessful) {
+                tmdbJSON = popular.body()!!
                 Log.d("Popular", tmdbJSON.toString())
                 for (i in tmdbJSON.results) {
                     val movieItem = MovieItem(i.id,i.title,i.overview, i.poster_path,i.vote_average)
-                    movieList.add(movieItem)
+                    popularMovies.add(movieItem)
                 }
             }else{
                 Toast.makeText(requireContext(),"There is something wrong!", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    suspend fun getLatest() {
+        return withContext(Dispatchers.IO) {
+            val latest =
+                TMDBInterface.create().getTopRatedMovies("9df4f48f58d1cb4702a2b4d936029e0d","1").awaitResponse()
+            if (latest.isSuccessful) {
+                tmdbJSON = latest.body()!!
+                Log.d("Latest", tmdbJSON.toString())
+                for (i in tmdbJSON.results) {
+                    val movieItem =
+                        MovieItem(i.id, i.title, i.overview, i.poster_path, i.vote_average)
+                    topMovies.add(movieItem)
+                }
+            } else {
+                Toast.makeText(requireContext(), "There is something wrong!", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }

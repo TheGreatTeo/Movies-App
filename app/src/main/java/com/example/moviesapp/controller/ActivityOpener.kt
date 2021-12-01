@@ -12,4 +12,11 @@ open class ActivityOpener:AppCompatActivity() {
         reqActivity.startActivity(intent)
         reqActivity.finish()
     }
+    open fun openMainFragment(reqActivity: FragmentActivity,nextActivity: Class<*>,username: String){
+        val intent = Intent(reqActivity.applicationContext,nextActivity)
+        intent.putExtra("username",username)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        reqActivity.startActivity(intent)
+        reqActivity.finish()
+    }
 }

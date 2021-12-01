@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="#182C45">
+    android:background="#264670">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/genreImage"
@@ -32,7 +32,7 @@
         app:layout_constraintStart_toEndOf="@+id/genreImage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
-        android:background="#182C45"/>
+        android:background="#264670"/>
 
     <ImageView
         android:id="@+id/arrow"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toEndOf="@+id/genre"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
-        android:background="#182C45"/>
+        android:background="#264670"/>
 
 
 

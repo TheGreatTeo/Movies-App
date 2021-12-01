@@ -26,6 +26,10 @@ class MovieRepository(private val movieDao: MovieDao) {
         return movieDao.getAddedMovies()
     }
 
+    fun movieExists(movieId: Int): Boolean{
+        return movieDao.movieExists(movieId)
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insertMovie(movieItem: MovieItem){

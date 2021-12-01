@@ -31,6 +31,9 @@ interface MovieDao {
     @Query("SELECT * FROM movie_table,Genre WHERE id=movieId AND genreId =:genre ORDER BY id ASC")
     fun getMoviesByGenre(genre: Int): Flow<List<MovieItem>>
 
+    @Query("SELECT * FROM movie_table WHERE id=:movieId")
+    fun movieExists(movieId: Int): Boolean
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movieItem: MovieItem)
 

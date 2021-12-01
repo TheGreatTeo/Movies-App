@@ -48,6 +48,29 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard), GenreAdapter.On
         recyclerView.visibility = View.GONE
 
         genreList = ArrayList()
+
+        val hashMap: Map<String,Int> = hashMapOf(
+            "Action" to R.drawable.action,
+            "Adventure" to R.drawable.adventure,
+            "Animation" to R.drawable.animation,
+            "Comedy" to R.drawable.comedy,
+            "Crime" to R.drawable.crime,
+            "Documentary" to R.drawable.documentary,
+            "Drama" to R.drawable.drama,
+            "Family" to R.drawable.family,
+            "Fantasy" to R.drawable.fantasy,
+            "History" to R.drawable.history,
+            "Horror" to R.drawable.horror,
+            "Music" to R.drawable.music,
+            "Mystery" to R.drawable.mystery,
+            "Romance" to R.drawable.romance,
+            "Science Fiction" to R.drawable.science_fiction,
+            "Thriller" to R.drawable.thriller,
+            "TV Movie" to R.drawable.tv_movie,
+            "War" to R.drawable.war,
+            "Western" to R.drawable.western
+        )
+
         var genreSet = sharedPrefs.getGenresName(requireActivity())
         if(checkInternet.isOnline(requireContext())) {
             if (genreSet.size == 1) {
@@ -66,7 +89,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard), GenreAdapter.On
                 lifecycleScope.launch() {
                     Log.d("GETGenre", "NOGET")
                     for (i in genreSet) {
-                        val genreItem = GenreItem(i, R.drawable.action_crop)
+                        val genreItem = GenreItem(i, hashMap.get(i)!!)
                         genreList.add(genreItem)
                         recyclerView.adapter = GenreAdapter(genreList, this@DashboardFragment)
                         recyclerView.layoutManager =
@@ -102,7 +125,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard), GenreAdapter.On
                 for (i in 0 until genres.genres.size) {
                     val genre = genres.genres.get(i).name
                     Log.d("genreList",genre + " " + genres.genres[i].id)
-                    val genreItem = GenreItem(genre, R.drawable.action_crop)
+                    val genreItem = GenreItem(genre, R.drawable.action)
                     genreList.add(genreItem)
                     genresId.add(genres.genres[i].id.toString())
                     genresName.add(genres.genres[i].name)

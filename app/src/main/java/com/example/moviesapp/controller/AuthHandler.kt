@@ -16,10 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.lang.Exception
 import java.lang.StringBuilder
 import java.security.MessageDigest
@@ -129,13 +126,29 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
     }
 
     suspend fun userLogIn(emailText: String,passwordText: String,reqActivity: FragmentActivity,progressBar: ProgressBar){
-        lifecycleScope.launch(Dispatchers.IO) {
-            auth.signInWithEmailAndPassword(emailText,passwordText)
+        GlobalScope.async(Dispatchers.IO) {
             auth.signInWithEmailAndPassword(emailText, getMD5(passwordText)).addOnCompleteListener(
                     OnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            sharedPrefsHandler.setEmail(context.applicationContext, emailText)
-                            activityOpener.openActivity(reqActivity,MainActivity::class.java)
+                            FirebaseFirestore.getInstance().collection("users").get().addOnSuccessListener { docs ->
+                                for(doc in docs) {
+                                    if (doc.get("email") == emailText) {
+                                        sharedPrefsHandler.setUsername(
+                                            context.applicationContext,
+                                            doc.get("username").toString()
+                                        )
+                                        sharedPrefsHandler.setEmail(
+                                            context.applicationContext,
+                                            emailText
+                                        )
+                                        activityOpener.openMainFragment(
+                                            reqActivity,
+                                            MainActivity::class.java,
+                                            doc.get("username").toString()
+                                        )
+                                    }
+                                }
+                            }
                         } else {
                             Toast.makeText(context.applicationContext, "Unsuccessfully", Toast.LENGTH_SHORT).show()
                         }
@@ -145,6 +158,6 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
                 delay(1000L)
                 progressBar.visibility = View.GONE
             }
-        }
+        }.await()
     }
 }

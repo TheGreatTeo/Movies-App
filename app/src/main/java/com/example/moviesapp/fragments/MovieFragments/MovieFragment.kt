@@ -29,7 +29,6 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
     var genreName: String = ""
     var movieDetailsFragment = MovieDetailsFragment()
     var movieList = listOf<MovieItem>()
-    var tmdbJSON = TMDBJSON(0,listOf<Result>())
     private val viewModel: MovieViewModel by viewModels {
         MovieViewModelFactory((requireActivity().application as MoviesApplication).repository)
     }
@@ -41,7 +40,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
 
         var progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         communicator = activity as Communicator
-        movieList = ArrayList<MovieItem>()
+        movieList = ArrayList()
         genreId = arguments?.getInt("genreId")!!
         genreName = arguments?.getString("genreName")!!
         movieDetailsFragment.getCallbackFragment(this)
