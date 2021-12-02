@@ -1,24 +1,17 @@
 package com.example.moviesapp.controller.RecyclerViewAdapters
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.graphics.drawable.toDrawable
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
-import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.data.Movie.MovieItem
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-class MovieAdapter(private val movieList: List<MovieItem>,private val listener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter(private val movieList: List<MovieItem>, private val listener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.movies, parent, false)
@@ -29,15 +22,7 @@ class MovieAdapter(private val movieList: List<MovieItem>,private val listener: 
         val currentMovie = movieList[position]
         holder.title.text = currentMovie.title
         holder.rating.text = currentMovie.rating.toString() + " ⭐ "
-        Picasso.get().load("https://image.tmdb.org/t/p/w500" + currentMovie.imageResource).into(holder.imageView)
-//        GlobalScope.launch(Dispatchers.Main) {
-//            holder.progressBar.visibility = View.VISIBLE
-//            holder.imageView.alpha = 0F
-//            delay(250L)
-//            currentMovie.imageResource.into(holder.imageView)
-//            holder.progressBar.visibility = View.GONE
-//            holder.imageView.alpha = 1F
-//        }
+        Picasso.get().load("https://image.tmdb.org/t/p/w500" + currentMovie.imageResource).error(R.drawable.noimage).into(holder.imageView)
     }
 
     override fun getItemCount() = movieList.size

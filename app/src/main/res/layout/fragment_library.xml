@@ -17,7 +17,7 @@
         android:id="@+id/noContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No content"
+        android:text="No movies added"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

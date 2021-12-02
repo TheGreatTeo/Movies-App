@@ -1,9 +1,9 @@
 package com.example.moviesapp.RoomDB
 
 import androidx.annotation.WorkerThread
-import com.example.moviesapp.data.Genre
-import com.example.moviesapp.data.MovieAndGenre
-import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.data.Genre.Genre
+import com.example.moviesapp.data.Movie.MovieAndGenre
+import com.example.moviesapp.data.Movie.MovieItem
 import kotlinx.coroutines.flow.Flow
 
 class MovieRepository(private val movieDao: MovieDao) {

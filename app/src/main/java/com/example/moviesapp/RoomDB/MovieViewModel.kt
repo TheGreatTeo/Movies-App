@@ -1,8 +1,8 @@
 package com.example.moviesapp.RoomDB
 
 import androidx.lifecycle.*
-import com.example.moviesapp.data.Genre
-import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.data.Genre.Genre
+import com.example.moviesapp.data.Movie.MovieItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException

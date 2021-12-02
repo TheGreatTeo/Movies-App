@@ -1,4 +1,4 @@
-package com.example.moviesapp.API.tmdbAPI
+package com.example.moviesapp.API.tmdbAPI.Genres
 
 data class Genre(
     val id: Int,

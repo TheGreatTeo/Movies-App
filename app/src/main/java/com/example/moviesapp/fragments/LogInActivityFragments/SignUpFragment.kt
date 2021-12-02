@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.AuthHandler
@@ -28,6 +29,7 @@ class SignUpFragment : Fragment(R.layout.signup_fragment) {
         val view = inflater.inflate(R.layout.signup_fragment, container, false)
 
         val auth = FirebaseAuth.getInstance()
+        val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         val authHandler = AuthHandler(auth,requireContext().applicationContext)
         val signUpButton:Button = view.findViewById(R.id.signUp)
         val emailText: EditText = view.findViewById(R.id.emailSignUp)
@@ -36,6 +38,12 @@ class SignUpFragment : Fragment(R.layout.signup_fragment) {
         val usernameText: EditText = view.findViewById(R.id.username)
 
         signUpButton.setOnClickListener{
+            emailText.visibility = View.GONE
+            passwordText.visibility = View.GONE
+            confirmPasswordText.visibility = View.GONE
+            usernameText.visibility = View.GONE
+            signUpButton.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
             authHandler.registerUser(emailText,passwordText,confirmPasswordText,usernameText,requireActivity())
         }
 

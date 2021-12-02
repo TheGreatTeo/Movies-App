@@ -2,11 +2,14 @@ package com.example.moviesapp.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.moviesapp.R
 import com.example.moviesapp.controller.Communicator
 import com.example.moviesapp.controller.Callback
 import com.example.moviesapp.controller.GoBack
+import com.example.moviesapp.controller.ViewPagerAdapter.Adapter
 import com.example.moviesapp.fragments.MainActivityFragments.DashboardFragment
 import com.example.moviesapp.fragments.MainActivityFragments.HomeFragment
 import com.example.moviesapp.fragments.MainActivityFragments.LibraryFragment
@@ -27,8 +30,10 @@ class MainActivity : AppCompatActivity(),Communicator,Callback {
         setContentView(R.layout.activity_main)
 
         nav= findViewById(R.id.bottomNav)
-        switchFragment(homeFragment,null)
+        if(savedInstanceState == null)
+            switchFragment(homeFragment,null)
 
+        dashboardFragment.getCallback(this)
         nav?.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.home -> supportFragmentManager.beginTransaction().apply { replace(R.id.mainActivity,homeFragment).commit() }
@@ -84,10 +89,7 @@ class MainActivity : AppCompatActivity(),Communicator,Callback {
     }
 
     override fun changeFragment() {
+        Log.d("Clicked","Click!4")
         supportFragmentManager.popBackStack()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
     }
 }

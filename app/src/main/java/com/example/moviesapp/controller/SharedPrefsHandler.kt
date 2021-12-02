@@ -3,7 +3,6 @@ package com.example.moviesapp.controller
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.example.moviesapp.API.tmdbAPI.Genre
 
 open class SharedPrefsHandler {
 

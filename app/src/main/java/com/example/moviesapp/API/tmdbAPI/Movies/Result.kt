@@ -1,4 +1,4 @@
-package com.example.moviesapp.API.tmdbAPI
+package com.example.moviesapp.API.tmdbAPI.Movies
 
 data class Result(
     val adult: Boolean,

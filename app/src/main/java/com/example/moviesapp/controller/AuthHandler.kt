@@ -126,7 +126,7 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
     }
 
     suspend fun userLogIn(emailText: String,passwordText: String,reqActivity: FragmentActivity,progressBar: ProgressBar){
-        GlobalScope.async(Dispatchers.IO) {
+        lifecycleScope.async(Dispatchers.IO) {
             auth.signInWithEmailAndPassword(emailText, getMD5(passwordText)).addOnCompleteListener(
                     OnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -153,11 +153,6 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
                             Toast.makeText(context.applicationContext, "Unsuccessfully", Toast.LENGTH_SHORT).show()
                         }
                     })
-            withContext(Dispatchers.Main){
-                progressBar.visibility = View.VISIBLE
-                delay(1000L)
-                progressBar.visibility = View.GONE
-            }
         }.await()
     }
 }

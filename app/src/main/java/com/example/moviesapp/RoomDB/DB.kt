@@ -4,18 +4,18 @@ import android.content.Context
 import android.util.Log
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.moviesapp.API.tmdbAPI.GenreJSON
-import com.example.moviesapp.API.tmdbAPI.Result
+import com.example.moviesapp.API.tmdbAPI.Genres.GenreJSON
+import com.example.moviesapp.API.tmdbAPI.Movies.Result
 import com.example.moviesapp.API.tmdbAPI.TMDBInterface
-import com.example.moviesapp.API.tmdbAPI.TMDBJSON
-import com.example.moviesapp.data.Genre
-import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.API.tmdbAPI.Movies.TMDBJSON
+import com.example.moviesapp.data.Genre.Genre
+import com.example.moviesapp.data.Movie.MovieItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
-@Database(entities = arrayOf(MovieItem::class,Genre::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(MovieItem::class, Genre::class), version = 1, exportSchema = false)
 open abstract class DB:RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
@@ -35,7 +35,7 @@ open abstract class DB:RoomDatabase() {
         }
         suspend fun populateDatabase(movieDao: MovieDao) {
             val genres = TMDBInterface.create().getGenres("9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
-            for(i in 1..2) {
+            for(i in 1..5) {
                 val movies =
                     TMDBInterface.create().getTopRatedMovies("9df4f48f58d1cb4702a2b4d936029e0d",i.toString())
                         .awaitResponse()

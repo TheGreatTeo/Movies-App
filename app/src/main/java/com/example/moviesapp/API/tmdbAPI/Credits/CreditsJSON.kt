@@ -1,4 +1,4 @@
-package com.example.moviesapp.API.tmdbAPI
+package com.example.moviesapp.API.tmdbAPI.Credits
 
 data class CreditsJSON(
     val cast: List<Cast>,

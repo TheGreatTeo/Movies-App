@@ -12,8 +12,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#E4E4E4</color>
     <color name="red">#E60F0F</color>
-    <color name="backgroud">#0C131C</color>
+    <color name="background">#0C131C</color>
     <color name="hintColor">#CCFFFFFF</color>
     <color name="buttonColor">#2E0B0B</color>
     <color name="cardColor">#264670</color>
+    <color name="buttonClicked">#180606</color>
 </resources>

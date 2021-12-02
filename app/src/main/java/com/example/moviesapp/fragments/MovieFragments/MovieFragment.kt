@@ -1,16 +1,14 @@
 package com.example.moviesapp.fragments.MovieFragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moviesapp.API.tmdbAPI.Result
-import com.example.moviesapp.API.tmdbAPI.TMDBJSON
 import com.example.moviesapp.R
 import com.example.moviesapp.RoomDB.*
 import com.example.moviesapp.controller.Callback
@@ -18,10 +16,10 @@ import com.example.moviesapp.controller.Communicator
 import com.example.moviesapp.controller.GoBack
 import com.example.moviesapp.controller.RecyclerViewAdapters.MovieAdapter
 import com.example.moviesapp.controller.RecyclerViewAdapters.MovieListAdapter
-import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.data.Movie.MovieItem
 
 class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClickListener, MovieListAdapter.OnItemClickListener,
-    GoBack,Callback {
+    GoBack {
 
     var callbackFragment:Callback? = null
     private lateinit var communicator: Communicator
@@ -37,13 +35,11 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_movie, container, false)
-
-        var progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         communicator = activity as Communicator
         movieList = ArrayList()
         genreId = arguments?.getInt("genreId")!!
         genreName = arguments?.getString("genreName")!!
-        movieDetailsFragment.getCallbackFragment(this)
+
 
         var recyclerView: RecyclerView = view.findViewById(R.id.movieList)
         var adapter = MovieListAdapter(this)
@@ -60,15 +56,17 @@ class MovieFragment : Fragment(R.layout.fragment_movie), MovieAdapter.OnItemClic
 
     override fun onItemClick(position: Int) {
         val movieItem = movieList.get(position)
+        movieDetailsFragment.getGoBack(this)
         communicator.passMovie(movieDetailsFragment,movieItem.id)
     }
 
     override fun goBack() {
-        changeFragment()
+        callbackFragment?.changeFragment()
+        Log.d("Clicked","Click!2")
     }
 
-    override fun changeFragment() {
-        callbackFragment!!.changeFragment()
+    fun getCallback(callback: Callback){
+        this.callbackFragment = callback
     }
 
 

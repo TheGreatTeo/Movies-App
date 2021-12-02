@@ -1,5 +1,9 @@
 package com.example.moviesapp.API.tmdbAPI
 
+import com.example.moviesapp.API.tmdbAPI.Credits.CreditsJSON
+import com.example.moviesapp.API.tmdbAPI.Genres.GenreJSON
+import com.example.moviesapp.API.tmdbAPI.Movies.NowPlayingJSON
+import com.example.moviesapp.API.tmdbAPI.Movies.TMDBJSON
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,7 +23,7 @@ interface TMDBInterface {
     fun getPopular(@Query("api_key") api_key: String): Call<TMDBJSON>
 
     @GET("/3/movie/now_playing")
-    fun getLatest(@Query("api_key") api_key: String): Call<TMDBJSON>
+    fun getNowPlaying(@Query("api_key") api_key: String,@Query("region") region:String = "GB"): Call<NowPlayingJSON>
 
     @GET("/3/search/movie")
     fun searchMovie(@Query("api_key") api_key: String, @Query("query") query: String): Call<TMDBJSON>

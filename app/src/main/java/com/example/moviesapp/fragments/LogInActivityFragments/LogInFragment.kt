@@ -43,6 +43,7 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
         var emailCopy = email
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
 
+
         logInButton.setOnClickListener {
             val emailText = email!!.text.toString()
             val passwordText = password.text.toString()
@@ -62,12 +63,18 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
                     password.requestFocus()
                     return@launch
                 }
+                email?.visibility = View.GONE
+                password.visibility = View.GONE
+                logInButton.visibility = View.GONE
+                signUpButton.visibility = View.GONE
+                forgotPassword.visibility = View.GONE
+                progressBar.visibility = View.VISIBLE
                 authHandler.userLogIn(emailText, passwordText, requireActivity(),progressBar)
-
             }
         }
 
         signUpButton.setOnClickListener{
+            Log.d("SignUpButton","Pressed!   " + callbackFragment.toString())
             callbackFragment?.changeFragment()
         }
 
@@ -75,12 +82,13 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
         return view
     }
 
-    fun getCallbackFragment(callbackFragment: Callback){
+    fun getCallbackFragment(callbackFragment: Callback) {
         this.callbackFragment = callbackFragment
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        Log.d("save","save")
         outState.putString("email",email?.text.toString())
     }
 
@@ -89,6 +97,7 @@ class LogInFragment : Fragment(R.layout.login_fragment) {
         Log.d("LogIn","AICI")
         var emailText = ""
         if(savedInstanceState != null){
+            Log.d("email",savedInstanceState.getString("email").toString())
             emailText = savedInstanceState.getString("email").toString()
             email!!.setText(emailText)
         }

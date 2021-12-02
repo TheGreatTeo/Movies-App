@@ -38,7 +38,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
-
+    <ImageView
+        android:id="@+id/missingData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/missing"
+        android:layout_marginTop="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
@@ -59,13 +68,14 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image"
-                android:layout_width="280dp"
-                android:layout_height="380dp"
+                android:layout_width="170dp"
+                android:layout_height="240dp"
                 android:src="@drawable/poster"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toTopOf="@id/title"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@id/synopsisTitle"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/rounded" />
@@ -74,15 +84,16 @@
                 android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="Title"
                 android:textAlignment="viewStart"
+                app:layout_constraintHorizontal_bias="0.9"
                 android:textSize="22dp"
                 android:textStyle="bold"
+                app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintBottom_toTopOf="@id/rating"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/rating"
@@ -93,6 +104,8 @@
                 android:textAlignment="viewStart"
                 android:textSize="18dp"
                 android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintBottom_toTopOf="@id/genreList"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +113,7 @@
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/genreList"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="20dp"
                 android:clipToPadding="false"
@@ -108,7 +121,8 @@
                 android:overScrollMode="never"
                 app:layout_constraintBottom_toTopOf="@id/synopsisTitle"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.9"
+                app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rating" />
 

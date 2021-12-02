@@ -84,9 +84,17 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userIcon"
-                android:layout_marginTop="28dp" />
+                android:layout_marginTop="40dp" />
 
-
+            <ImageView
+                android:id="@+id/missingData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/missing"
+                app:layout_constraintBottom_toTopOf="@id/nowText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/latestText"/>
             <TextView
                 android:id="@+id/latestText"
                 android:layout_width="wrap_content"
@@ -108,25 +116,52 @@
                 android:clipToPadding="false"
                 android:foregroundGravity="left"
                 android:overScrollMode="never"
-                app:layout_constraintBottom_toTopOf="@id/popularText"
+                app:layout_constraintBottom_toTopOf="@id/nowText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.35"
+                app:layout_constraintHeight_percent="0.25"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/latestText" />
 
             <TextView
-                android:id="@+id/popularText"
+                android:id="@+id/nowText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Now playing"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/viewPagerNow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewPagerPopular" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPagerNow"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:foregroundGravity="left"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toTopOf="@id/topRated"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.25"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nowText" />
+
+            <TextView
+                android:id="@+id/topRated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Top rated"
                 android:textSize="22dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/viewPagerTop"
+                app:layout_constraintBottom_toTopOf="@id/viewPagerTop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewPagerPopular" />
+                app:layout_constraintTop_toBottomOf="@id/viewPagerNow" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPagerTop"
@@ -137,10 +172,10 @@
                 android:overScrollMode="never"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.35"
+                app:layout_constraintHeight_percent="0.25"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/popularText" />
+                app:layout_constraintTop_toBottomOf="@id/topRated" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

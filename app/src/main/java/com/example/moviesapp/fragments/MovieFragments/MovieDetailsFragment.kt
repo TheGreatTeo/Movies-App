@@ -1,20 +1,20 @@
 package com.example.moviesapp.fragments.MovieFragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.example.moviesapp.API.tmdbAPI.*
+import com.example.moviesapp.API.tmdbAPI.Credits.CreditsJSON
+import com.example.moviesapp.BuildConfig
 import com.example.moviesapp.R
 import com.example.moviesapp.RoomDB.MovieViewModel
 import com.example.moviesapp.RoomDB.MovieViewModelFactory
@@ -23,13 +23,12 @@ import com.example.moviesapp.controller.SharedPrefsHandler
 import com.example.moviesapp.controller.ViewPagerAdapter.CastAdapter
 import com.example.moviesapp.controller.ViewPagerAdapter.MovieGenreAdapter
 import com.example.moviesapp.controller.Callback
+import com.example.moviesapp.controller.CheckInternet
 import com.example.moviesapp.controller.GoBack
-import com.example.moviesapp.data.*
-import com.example.moviesapp.data.Cast
-import com.example.moviesapp.data.Genre
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.moviesapp.data.Cast.Cast
+import com.example.moviesapp.data.Cast.CastMember
+import com.example.moviesapp.data.Genre.Genre
+import com.example.moviesapp.data.Movie.MovieAndGenre
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import retrofit2.awaitResponse
@@ -42,6 +41,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     var creditsJSON = CreditsJSON(listOf(),listOf(),0)
     var cast: Cast = Cast("",arrayListOf<CastMember>())
     val sharedPrefs = SharedPrefsHandler()
+    val checkInternet = CheckInternet()
     var goBack: GoBack? = null
     private val viewModel: MovieViewModel by viewModels {
         MovieViewModelFactory((requireActivity().application as MoviesApplication).repository)
@@ -61,50 +61,63 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         val backArrow: ImageView = view.findViewById(R.id.backArrow)
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         val nestedScrollView: NestedScrollView = view.findViewById(R.id.scrollView)
+        val missingData: ImageView = view.findViewById(R.id.missingData)
         var addToWatchList: Button = view.findViewById(R.id.addToWatchList)
         var genreItems = arrayListOf<Genre>()
 
         progressBar.visibility = View.VISIBLE
         nestedScrollView.visibility = View.GONE
+        missingData.visibility = View.GONE
         movieId = arguments?.getInt("id")!!
         Log.d("MovieId",movieId.toString())
-        lifecycleScope.launch() {
-            checkMovie()
-            movieDetails(movieId.toString())
-            title.text = movieAndGenre.movieItem.title
-            rating.text = movieAndGenre.movieItem.rating.toString()
-            description.text = movieAndGenre.movieItem.description
+        if(checkInternet.isOnline(requireContext())) {
+            lifecycleScope.launch() {
+                checkMovie()
+                movieDetails(movieId.toString())
+                title.text = movieAndGenre.movieItem.title
+                rating.text = movieAndGenre.movieItem.rating.toString()
+                description.text = movieAndGenre.movieItem.description
 
-            for(genres in movieAndGenre.genreIds){
-                Log.d("GNR",genres.toString())
-                genreItems.add(Genre(-1,-1,genres.genreId,genres.genreName))
+                for (genres in movieAndGenre.genreIds) {
+                    Log.d("GNR", genres.toString())
+                    genreItems.add(Genre(-1, -1, genres.genreId, genres.genreName))
+                }
+
+                val genreAdapter =
+                    MovieGenreAdapter(genreItems, requireContext().applicationContext)
+                genreList.adapter = genreAdapter
+                genreList.setPadding(0, 0, 600, 0)
+                genreList.currentItem = 0
+                Picasso.get()
+                    .load("https://image.tmdb.org/t/p/w500" + movieAndGenre.movieItem.imageResource)
+                    .error(R.drawable.noimage).into(image)
+                rating.text = "Director: " + cast!!.director + "  |  " + rating.text + " ⭐ "
+
+                val castAdapter = CastAdapter(cast!!.cast, requireContext().applicationContext)
+                castList.adapter = castAdapter
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+                    castList.setPadding(0, 0, 610, 0)
+                else
+                    castList.setPadding(0, 0, 1600, 0)
+                if (added) {
+                    addToWatchList.setBackgroundColor(resources.getColor(R.color.buttonClicked))
+                    addToWatchList.text = "ADDED"
+                }
+
+                progressBar.visibility = View.GONE
+                nestedScrollView.visibility = View.VISIBLE
             }
-
-            val genreAdapter = MovieGenreAdapter(genreItems,requireContext().applicationContext)
-            genreList.adapter = genreAdapter
-            genreList.setPadding(0,0,600,0)
-            genreList.currentItem = 0
-            Picasso.get().load("https://image.tmdb.org/t/p/w500"+movieAndGenre.movieItem.imageResource).error(R.drawable.noimage).into(image)
-            rating.text = "Director: " + cast!!.director + "  |  " +rating.text + " ⭐ "
-
-            val castAdapter = CastAdapter(cast!!.cast,requireContext().applicationContext)
-            castList.adapter = castAdapter
-            castList.setPadding(0,0,610,0)
-
-            if(added){
-                addToWatchList.setBackgroundColor(resources.getColor(R.color.black))
-                addToWatchList.text = "ADDED"
-            }
-
+        }else{
             progressBar.visibility = View.GONE
-            nestedScrollView.visibility = View.VISIBLE
+            missingData.visibility = View.VISIBLE
+            Toast.makeText(requireContext(),"No internet connection!", Toast.LENGTH_SHORT).show()
         }
 
         addToWatchList.setOnClickListener {
             Log.d("ADDED3", added.toString())
             lifecycleScope.launch() {
                 if (!added) {
-                    addToWatchList.setBackgroundColor(resources.getColor(R.color.black))
+                    addToWatchList.setBackgroundColor(resources.getColor(R.color.buttonClicked))
                     addToWatchList.text = "ADDED"
                     GlobalScope.async(Dispatchers.IO) {
                         viewModel.addMovieToLibrary(movieId)
@@ -122,7 +135,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
 
         backArrow.setOnClickListener {
-            Log.d("Salut","SAL")
+            Log.d("Clicked","Click!1")
             goBack?.goBack()
         }
 
@@ -140,7 +153,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             movieAndGenre = viewModel.getMovieById(movieID.toInt())
             Log.d("MovieAndGenre",movieAndGenre.toString()+" ID:"+ movieID)
             Log.d("movieID",movieID)
-            val movies = TMDBInterface.create().getCredits(movieID,"9df4f48f58d1cb4702a2b4d936029e0d").awaitResponse()
+            val movies = TMDBInterface.create().getCredits(movieID,BuildConfig.API_KEY).awaitResponse()
             if (movies.isSuccessful) {
                 creditsJSON = movies.body()!!
                 Log.d("Cast", creditsJSON.toString())
@@ -161,7 +174,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             }
         }
     }
-    fun getCallbackFragment(callbackFragment: Callback){
-        this.callback = callbackFragment
+    fun getGoBack(goBack: GoBack){
+        this.goBack = goBack
     }
 }

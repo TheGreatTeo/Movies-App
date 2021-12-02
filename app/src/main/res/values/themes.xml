@@ -16,7 +16,7 @@
 
     <style name="Theme.New" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="android:windowBackground">@color/backgroud</item>
+        <item name="android:windowBackground">@color/background</item>
         <item name="colorPrimary">@color/buttonColor</item>
         <item name="colorPrimaryVariant">@color/buttonColor</item>
         <item name="android:textColor">@color/white</item>
@@ -51,6 +51,6 @@
     </style>
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:background">@color/backgroud</item>
+        <item name="android:background">@color/background</item>
     </style>
 </resources>

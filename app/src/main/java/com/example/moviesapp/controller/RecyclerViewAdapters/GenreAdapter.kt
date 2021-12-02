@@ -7,9 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
-import com.example.moviesapp.data.GenreItem
+import com.example.moviesapp.data.Genre.GenreItem
 
-class GenreAdapter(private val genreList: List<GenreItem>,private val listener: OnItemClickListener) : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
+class GenreAdapter(private val genreList: List<GenreItem>, private val listener: OnItemClickListener) : RecyclerView.Adapter<GenreAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.genres, parent, false)

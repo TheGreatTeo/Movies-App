@@ -15,7 +15,7 @@ import com.example.moviesapp.RoomDB.MovieViewModelFactory
 import com.example.moviesapp.RoomDB.MoviesApplication
 import com.example.moviesapp.controller.Communicator
 import com.example.moviesapp.controller.RecyclerViewAdapters.MovieListAdapter
-import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.data.Movie.MovieItem
 import com.example.moviesapp.fragments.MovieFragments.MovieDetailsFragment
 
 class LibraryFragment : Fragment(R.layout.fragment_library), MovieListAdapter.OnItemClickListener {

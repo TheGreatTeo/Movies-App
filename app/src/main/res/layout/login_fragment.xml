@@ -9,6 +9,7 @@
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         app:layout_constraintWidth_percent="0.7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.2"
         android:hint="@string/emailHint"
+        android:background="@drawable/search_view"
         />
 
     <EditText
@@ -26,6 +28,8 @@
         android:hint="@string/passwordHint"
         android:inputType="textPassword"
         android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@drawable/search_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -1,4 +1,4 @@
-package com.example.moviesapp.API.tmdbAPI
+package com.example.moviesapp.API.tmdbAPI.Credits
 
 data class Crew(
     val adult: Boolean,

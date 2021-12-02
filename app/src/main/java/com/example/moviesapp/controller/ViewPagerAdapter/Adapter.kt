@@ -1,7 +1,6 @@
 package com.example.moviesapp.controller.ViewPagerAdapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.moviesapp.R
-import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.data.Movie.MovieItem
 import com.squareup.picasso.Picasso
 
-class Adapter(movieList: List<MovieItem>, context: Context): PagerAdapter() {
+class Adapter(movieList: List<MovieItem>, context: Context, private val listener: OnItemClickListener): PagerAdapter() {
 
     private var movieList: List<MovieItem> = listOf()
     private var context: Context? = null
@@ -32,7 +31,6 @@ class Adapter(movieList: List<MovieItem>, context: Context): PagerAdapter() {
         val layoutInflater = LayoutInflater.from(context)
         val view = layoutInflater.inflate(R.layout.view_pager_item_movies,container,false)
         val currentMovie = movieList.get(position)
-
         val imageView: ImageView = view.findViewById(R.id.image)
         val title: TextView = view.findViewById(R.id.title)
         //val rating: TextView = view.findViewById(R.id.rating)
@@ -42,7 +40,7 @@ class Adapter(movieList: List<MovieItem>, context: Context): PagerAdapter() {
         //rating.text = "" + currentMovie.rating + " ⭐ "
 
         view.setOnClickListener {
-            Log.d("Item",it.toString())
+            listener.onItemClick(currentMovie.id)
         }
 
         container.addView(view,0)
@@ -54,4 +52,7 @@ class Adapter(movieList: List<MovieItem>, context: Context): PagerAdapter() {
         container.removeView(`object` as View?)
     }
 
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
 }

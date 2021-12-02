@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviesapp.R
-import com.example.moviesapp.data.MovieItem
+import com.example.moviesapp.data.Movie.MovieItem
 import com.squareup.picasso.Picasso
 
 class MovieListAdapter(private val listener: OnItemClickListener) : ListAdapter<MovieItem, MovieListAdapter.ViewHolder>(MovieComparator()){
@@ -43,7 +43,7 @@ class MovieListAdapter(private val listener: OnItemClickListener) : ListAdapter<
         fun bind(movieItem: MovieItem){
             title.text = movieItem.title
             rating.text = movieItem.rating.toString() + " ⭐ "
-            Picasso.get().load("https://image.tmdb.org/t/p/w500" + movieItem.imageResource).into(imageView)
+            Picasso.get().load("https://image.tmdb.org/t/p/w500" + movieItem.imageResource).error(R.drawable.noimage).into(imageView)
         }
 
         init {

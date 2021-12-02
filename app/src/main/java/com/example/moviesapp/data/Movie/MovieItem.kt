@@ -1,4 +1,4 @@
-package com.example.moviesapp.data
+package com.example.moviesapp.data.Movie
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,4 +1,4 @@
-package com.example.moviesapp.data
+package com.example.moviesapp.data.Genre
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

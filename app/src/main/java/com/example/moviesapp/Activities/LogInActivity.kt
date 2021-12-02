@@ -10,11 +10,13 @@ import com.example.moviesapp.fragments.LogInActivityFragments.LogInFragment
 import com.example.moviesapp.fragments.LogInActivityFragments.SignUpFragment
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -55,13 +57,16 @@ class LogInActivity : AppCompatActivity(), Callback {
         if(savedInstanceState == null)
             switchToLogIn()
         else{
-            val fragments = supportFragmentManager.fragments
-            if(fragments.get(fragments.size-1) == logInFragment)
-                switchToLogIn()
-            else
-                if(fragments.get(fragments.size-1) == signUpFragment)
-                    switchToSignUp()
+            Log.d("SupportFragmentManager",supportFragmentManager.getFragment(savedInstanceState,"fragment").toString())
+            if(supportFragmentManager.getFragment(savedInstanceState,"fragment") is LogInFragment){
+                (supportFragmentManager.getFragment(savedInstanceState,"fragment") as LogInFragment).getCallbackFragment(this)
+            }
+            if(supportFragmentManager.getFragment(savedInstanceState,"fragment") is SignUpFragment){
+
+            }
         }
+
+        Log.d("SupportFragManager1",supportFragmentManager.toString())
     }
 
     private fun switchToLogIn() {
@@ -94,21 +99,26 @@ class LogInActivity : AppCompatActivity(), Callback {
 
     override fun onBackPressed() {
         val fragments = supportFragmentManager.fragments
-        if (fragments.get(fragments.size - 1) == logInFragment) {
+        if (fragments.get(fragments.size - 1) is LogInFragment) {
             val startMain = Intent(Intent.ACTION_MAIN)
             startMain.addCategory(Intent.CATEGORY_HOME)
             startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(startMain)
         }
         else
-            if (fragments.get(fragments.size - 1) == signUpFragment){
-                switchToLogIn()
-        }
+            if (fragments.get(fragments.size - 1) is SignUpFragment && resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+                supportFragmentManager.popBackStack()
+
+            }
+        else{
+            supportFragmentManager.popBackStack()
+            }
 
     }
     override fun onSaveInstanceState(outState: Bundle) {
         val fragments = supportFragmentManager.fragments
-        supportFragmentManager.putFragment(outState,"fragment",fragments.get(fragments.size-1))
+        supportFragmentManager.putFragment(outState,"fragment",supportFragmentManager.findFragmentById(R.id.frameLogIn)!!)
+        Log.d("SupportFragManager2",supportFragmentManager.toString())
         super.onSaveInstanceState(outState)
     }
 

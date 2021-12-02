@@ -1,16 +1,13 @@
 package com.example.moviesapp.controller.ViewPagerAdapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.moviesapp.R
-import com.example.moviesapp.data.Cast
-import com.example.moviesapp.data.CastMember
-import com.example.moviesapp.data.Genre
+import com.example.moviesapp.data.Cast.CastMember
 import com.google.android.material.imageview.ShapeableImageView
 import com.squareup.picasso.Picasso
 

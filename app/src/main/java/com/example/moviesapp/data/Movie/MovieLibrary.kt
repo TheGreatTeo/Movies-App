@@ -1,4 +1,4 @@
-package com.example.moviesapp.data
+package com.example.moviesapp.data.Movie
 
 open class MovieLibrary(genrePos: Int,moviePos:Int,userID: String) {
     var genrePos = 0
