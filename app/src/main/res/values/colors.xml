@@ -15,4 +15,5 @@
     <color name="backgroud">#0C131C</color>
     <color name="hintColor">#CCFFFFFF</color>
     <color name="buttonColor">#2E0B0B</color>
+    <color name="cardColor">#264670</color>
 </resources>

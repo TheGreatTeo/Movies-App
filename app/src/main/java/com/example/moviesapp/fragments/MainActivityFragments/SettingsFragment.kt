@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.app.ActivityCompat.recreate
 import com.example.moviesapp.Activities.CoroutinesHomework
 import com.example.moviesapp.Activities.LogInActivity
@@ -29,9 +30,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
         loadLanguage()
+        val email: TextView = view.findViewById(R.id.email)
+        val username: TextView = view.findViewById(R.id.username)
+        val accountDetails: Button = view.findViewById(R.id.accountDetails)
         val signOutButton: Button = view.findViewById(R.id.signOut)
-        val toCoroutine: Button = view.findViewById(R.id.toCoroutine)
         val changeLanguage: Button = view.findViewById(R.id.changeLanguage)
+
+        email.text = sharedPrefsHandler.getEmail(this.requireContext())
+        username.text = sharedPrefsHandler.getUsername(this.requireContext())
+        changeLanguage.setBackgroundColor(resources.getColor(R.color.cardColor))
+        signOutButton.setBackgroundColor(resources.getColor(R.color.cardColor))
+        accountDetails.setBackgroundColor(resources.getColor(R.color.cardColor))
 
         signOutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -41,15 +50,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             requireActivity().finish()
         }
 
-        toCoroutine.setOnClickListener {
-            activityOpener.openActivity(requireActivity(), CoroutinesHomework::class.java)
-        }
-
         changeLanguage.setOnClickListener {
             val languages = arrayOf("English","Romanian")
-            val alertDialog = AlertDialog.Builder(requireActivity())
+            val alertDialog = AlertDialog.Builder(requireActivity(),R.style.MyDialogTheme)
             alertDialog.setTitle(R.string.changeLanguageTitle)
-            alertDialog.setSingleChoiceItems(languages,-1,DialogInterface.OnClickListener { dialog, which ->
+            var checkedItem = -1
+            when(sharedPrefsHandler.getLanguage(this.requireContext())){
+                "en" -> checkedItem = 0
+                "ro" -> checkedItem = 1
+            }
+            alertDialog.setSingleChoiceItems(languages,checkedItem,DialogInterface.OnClickListener { dialog, which ->
                 if(which == 0) {
                     setLanguage("en")
                     recreate(requireActivity())
