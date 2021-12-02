@@ -19,18 +19,10 @@
         <item name="android:windowBackground">@color/backgroud</item>
         <item name="colorPrimary">@color/buttonColor</item>
         <item name="colorPrimaryVariant">@color/buttonColor</item>
-        <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:editTextColor">@color/white</item>
         <item name="android:textColorHint">@color/hintColor</item>
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:textColorTertiary">@color/white</item>
-        <item name="android:textColorPrimaryInverse">@color/white</item>
-        <item name="android:textColorSecondaryInverse">@color/white</item>
-        <item name="android:textColorTertiaryInverse">@color/white</item>
-        <item name="colorButtonNormal">@color/buttonColor</item>
-        <item name="android:buttonStyle">@style/Button</item>
         <item name="searchViewStyle">@style/SearchView</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -56,5 +48,9 @@
     </style>
     <style name="SearchView" parent="Widget.AppCompat.SearchView">
         <item name="android:background">@drawable/search_view</item>
+    </style>
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
