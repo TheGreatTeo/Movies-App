@@ -146,10 +146,26 @@
                 android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintVertical_bias="0"
-                app:layout_constraintBottom_toTopOf="@id/castList"
+                app:layout_constraintBottom_toTopOf="@id/castTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/synopsisTitle" />
+
+            <TextView
+                android:id="@+id/castTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Cast"
+                android:textAlignment="viewStart"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toTopOf="@id/castList"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/synopsis" />
+
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/castList"
@@ -159,12 +175,40 @@
                 android:clipToPadding="false"
                 android:foregroundGravity="left"
                 android:overScrollMode="never"
-                app:layout_constraintBottom_toTopOf="@id/addToWatchList"
+                app:layout_constraintBottom_toTopOf="@id/trailerTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/synopsis" />
+                app:layout_constraintTop_toBottomOf="@+id/castTitle" />
 
+            <TextView
+                android:id="@+id/trailerTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Trailer"
+                android:textAlignment="viewStart"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toTopOf="@id/trailer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/castList" />
+
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/trailer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:autoPlay="false"
+                app:showYouTubeButton="false"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/trailerTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/addToWatchList">
+            </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
             <Button
                 android:id="@+id/addToWatchList"
                 android:layout_width="0dp"
@@ -179,7 +223,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/castList" />
+                app:layout_constraintTop_toBottomOf="@+id/trailer" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -35,7 +35,7 @@ class Adapter(movieList: List<MovieItem>, context: Context, private val listener
         val title: TextView = view.findViewById(R.id.title)
         //val rating: TextView = view.findViewById(R.id.rating)
 
-        Picasso.get().load("https://image.tmdb.org/t/p/w500" + currentMovie.imageResource).into(imageView)
+        Picasso.get().load("https://image.tmdb.org/t/p/w500" + currentMovie.imageResource).placeholder(R.drawable.image_loading).error(R.drawable.noimage).into(imageView)
         title.setText(currentMovie.title)
         //rating.text = "" + currentMovie.rating + " ⭐ "
 

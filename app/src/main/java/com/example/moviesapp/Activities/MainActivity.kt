@@ -74,14 +74,15 @@ class MainActivity : AppCompatActivity(),Communicator,Callback {
 
     override fun onBackPressed() {
         val fragments = supportFragmentManager.fragments
-        if(fragments.get(fragments.size-1) == dashboardFragment || fragments.get(fragments.size-1) == libraryFragment || fragments.get(fragments.size-1) == settingsFragment) {
+        if(fragments.get(fragments.size-1) is DashboardFragment || fragments.get(fragments.size-1) is LibraryFragment || fragments.get(fragments.size-1) is SettingsFragment) {
             supportFragmentManager.beginTransaction()
                 .apply { replace(R.id.mainActivity, homeFragment).commit() }
             nav?.selectedItemId = R.id.home
         }
-        else if(fragments.get(fragments.size-1) == homeFragment){
+        else if(fragments.get(fragments.size-1) is HomeFragment){
             supportFragmentManager.popBackStack()
             super.onBackPressed()
+
         }
         else
             supportFragmentManager.popBackStack()

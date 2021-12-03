@@ -14,6 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.example.moviesapp.API.tmdbAPI.*
 import com.example.moviesapp.API.tmdbAPI.Credits.CreditsJSON
+import com.example.moviesapp.API.tmdbAPI.Videos.Result
+import com.example.moviesapp.API.tmdbAPI.Videos.VideosJSON
 import com.example.moviesapp.BuildConfig
 import com.example.moviesapp.R
 import com.example.moviesapp.RoomDB.MovieViewModel
@@ -29,9 +31,16 @@ import com.example.moviesapp.data.Cast.Cast
 import com.example.moviesapp.data.Cast.CastMember
 import com.example.moviesapp.data.Genre.Genre
 import com.example.moviesapp.data.Movie.MovieAndGenre
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import retrofit2.awaitResponse
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+
+
+
 
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
@@ -39,10 +48,12 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     var callback: Callback? = null
     var added: Boolean = false
     var creditsJSON = CreditsJSON(listOf(),listOf(),0)
+    var videosJSON = VideosJSON(0, listOf<Result>())
     var cast: Cast = Cast("",arrayListOf<CastMember>())
-    val sharedPrefs = SharedPrefsHandler()
     val checkInternet = CheckInternet()
+    var trailerKey = ""
     var goBack: GoBack? = null
+
     private val viewModel: MovieViewModel by viewModels {
         MovieViewModelFactory((requireActivity().application as MoviesApplication).repository)
     }
@@ -62,8 +73,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
         val nestedScrollView: NestedScrollView = view.findViewById(R.id.scrollView)
         val missingData: ImageView = view.findViewById(R.id.missingData)
+        val videoPlayer: YouTubePlayerView = view.findViewById(R.id.trailer)
         var addToWatchList: Button = view.findViewById(R.id.addToWatchList)
         var genreItems = arrayListOf<Genre>()
+
+        lifecycle.addObserver(videoPlayer)
 
         progressBar.visibility = View.VISIBLE
         nestedScrollView.visibility = View.GONE
@@ -99,6 +113,14 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                     castList.setPadding(0, 0, 610, 0)
                 else
                     castList.setPadding(0, 0, 1600, 0)
+
+                getTrailer()
+                videoPlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        youTubePlayer.cueVideo(trailerKey, 0F)
+                    }
+                })
+
                 if (added) {
                     addToWatchList.setBackgroundColor(resources.getColor(R.color.buttonClicked))
                     addToWatchList.text = "ADDED"
@@ -171,6 +193,23 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 cast.cast = castMembers
             }else{
                 Log.d("Error Body",movies.message())
+            }
+        }
+    }
+
+    suspend fun getTrailer(){
+        return withContext(Dispatchers.IO){
+            val videos = TMDBInterface.create().getTrailer(movieId.toString(),BuildConfig.API_KEY).awaitResponse()
+
+            if(videos.isSuccessful){
+                videosJSON = videos.body()!!
+
+                for(i in videosJSON.results){
+                    if(i.type == "Trailer"){
+                        trailerKey = i.key
+                        break
+                    }
+                }
             }
         }
     }

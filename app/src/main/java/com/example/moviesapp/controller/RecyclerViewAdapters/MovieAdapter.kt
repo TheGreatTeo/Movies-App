@@ -22,7 +22,7 @@ class MovieAdapter(private val movieList: List<MovieItem>, private val listener:
         val currentMovie = movieList[position]
         holder.title.text = currentMovie.title
         holder.rating.text = currentMovie.rating.toString() + " ⭐ "
-        Picasso.get().load("https://image.tmdb.org/t/p/w500" + currentMovie.imageResource).error(R.drawable.noimage).into(holder.imageView)
+        Picasso.get().load("https://image.tmdb.org/t/p/w500" + currentMovie.imageResource).placeholder(R.drawable.image_loading).error(R.drawable.noimage).into(holder.imageView)
     }
 
     override fun getItemCount() = movieList.size
@@ -32,7 +32,6 @@ class MovieAdapter(private val movieList: List<MovieItem>, private val listener:
         val imageView: ImageView = itemView.findViewById(R.id.image)
         val title: TextView = itemView.findViewById(R.id.title)
         val rating: TextView = itemView.findViewById(R.id.rating)
-        val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
 
         init {
             itemView.setOnClickListener(this)

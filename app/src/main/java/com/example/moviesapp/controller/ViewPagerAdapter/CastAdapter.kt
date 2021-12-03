@@ -34,7 +34,7 @@ class CastAdapter(castMembers: List<CastMember>, context: Context): PagerAdapter
         val castName: TextView = view.findViewById(R.id.castName)
         val castImage: ShapeableImageView = view.findViewById(R.id.castImage)
         castName.text = castMembers.get(position).name
-        Picasso.get().load("https://image.tmdb.org/t/p/w500"+castMembers.get(position).profile).error(R.drawable.noimage).into(castImage)
+        Picasso.get().load("https://image.tmdb.org/t/p/w500"+castMembers.get(position).profile).placeholder(R.drawable.image_loading).error(R.drawable.noimage).into(castImage)
 
         container.addView(view,0)
 

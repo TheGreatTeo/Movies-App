@@ -38,12 +38,11 @@ class MovieListAdapter(private val listener: OnItemClickListener) : ListAdapter<
         val imageView: ImageView = itemView.findViewById(R.id.image)
         val title: TextView = itemView.findViewById(R.id.title)
         val rating: TextView = itemView.findViewById(R.id.rating)
-        val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
 
         fun bind(movieItem: MovieItem){
             title.text = movieItem.title
             rating.text = movieItem.rating.toString() + " ⭐ "
-            Picasso.get().load("https://image.tmdb.org/t/p/w500" + movieItem.imageResource).error(R.drawable.noimage).into(imageView)
+            Picasso.get().load("https://image.tmdb.org/t/p/w500" + movieItem.imageResource).placeholder(R.drawable.image_loading).error(R.drawable.noimage).into(imageView)
         }
 
         init {

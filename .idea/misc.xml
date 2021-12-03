@@ -10,6 +10,7 @@
         <entry key="..\:/Movies-App/app/src/main/res/drawable/home.xml" value="0.3828125" />
         <entry key="..\:/Movies-App/app/src/main/res/drawable/ic_baseline_dashboard_24.xml" value="0.22135416666666666" />
         <entry key="..\:/Movies-App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Movies-App/app/src/main/res/drawable/image_loading.xml" value="0.3828125" />
         <entry key="..\:/Movies-App/app/src/main/res/drawable/right_arrow.xml" value="0.3828125" />
         <entry key="..\:/Movies-App/app/src/main/res/drawable/round.xml" value="0.3828125" />
         <entry key="..\:/Movies-App/app/src/main/res/drawable/search_view.xml" value="0.3828125" />
@@ -31,7 +32,7 @@
         <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_log_in.xml" value="0.35260416666666666" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_movie.xml" value="0.2" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_movie_details.xml" value="0.22" />
-        <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_search.xml" value="0.14" />
+        <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_search.xml" value="0.33" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/fragment_settings.xml" value="0.5474339035769828" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/genres.xml" value="0.33" />
         <entry key="..\:/Movies-App/app/src/main/res/layout/login_fragment.xml" value="0.33" />

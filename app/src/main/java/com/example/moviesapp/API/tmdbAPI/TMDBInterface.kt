@@ -4,6 +4,7 @@ import com.example.moviesapp.API.tmdbAPI.Credits.CreditsJSON
 import com.example.moviesapp.API.tmdbAPI.Genres.GenreJSON
 import com.example.moviesapp.API.tmdbAPI.Movies.NowPlayingJSON
 import com.example.moviesapp.API.tmdbAPI.Movies.TMDBJSON
+import com.example.moviesapp.API.tmdbAPI.Videos.VideosJSON
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,6 +31,10 @@ interface TMDBInterface {
 
     @GET("/3/movie/{movie_id}/credits")
     fun getCredits(@Path("movie_id") movie_id: String,@Query("api_key") api_key: String): Call<CreditsJSON>
+
+
+    @GET("/3/movie/{movie_id}/videos")
+    fun getTrailer(@Path("movie_id")movie_id: String,@Query("api_key") api_key: String):Call<VideosJSON>
 
     companion object{
         var BASE_URL = "https://api.themoviedb.org"

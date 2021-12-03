@@ -65,38 +65,6 @@ open class AuthHandler(auth: FirebaseAuth, context: Context): AppCompatActivity(
         var confirmPassword = confirmPasswordText.text.toString()
         var username = usernameText.text.toString()
 
-        if(!password.equals(confirmPassword)){
-            confirmPasswordText.setError("Passwords not matching")
-            confirmPasswordText.requestFocus()
-            return
-        }
-        if(email.isEmpty()){
-            emailText.setError("Email is requierd")
-            emailText.requestFocus()
-            return
-        }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            emailText.setError("Invalid email")
-            emailText.requestFocus()
-            return
-        }
-
-        if(password.isEmpty()){
-            passwordText.setError("Password is requierd")
-            passwordText.requestFocus()
-            return
-        }
-        if(password.length < 6){
-            passwordText.setError("Min 6 characters")
-            passwordText.requestFocus()
-            return
-        }
-        if(username.isEmpty()){
-            usernameText.setError("Username is requierd")
-            usernameText.requestFocus()
-            return
-        }
-
         auth.createUserWithEmailAndPassword(email,getMD5(password)).addOnCompleteListener(
             OnCompleteListener { task ->
                 if(task.isSuccessful){
